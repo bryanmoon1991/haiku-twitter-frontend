@@ -1,17 +1,12 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+
+
 class Login extends Component {
   state = {
     username: "",
-    email: "",
     password: "",
-    errors: "",
   };
-
-  componentWillMount() {
-    return this.props.loggedInStatus ? this.redirect() : null;
-  }
 
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -19,33 +14,24 @@ class Login extends Component {
       [name]: value,
     });
   };
+
   handleSubmit = (event) => {
     event.preventDefault();
-    const { username, email, password } = this.state;
+    const { username, password } = this.state;
     let user = {
       username: username,
-      email: email,
       password: password,
     };
-
-      axios.post("http://localhost:3001/login",
-          { user },
-          { withCredentials: true })
-      .then((response) => {
-        if (response.data.logged_in) {
-          this.props.handleLogin(response.data);
-          this.redirect();
-        } else {
-          this.setState({
-            errors: response.data.errors,
-          });
-        }
-      })
-      .catch((error) => console.log("api errors:", error));
+    this.props.handleLogin(user)
+    this.redirect()
   };
+
+
   redirect = () => {
     this.props.history.push("/");
   };
+
+
   handleErrors = () => {
     return (
       <div>
@@ -57,8 +43,9 @@ class Login extends Component {
       </div>
     );
   };
+  
   render() {
-    const { username, email, password } = this.state;
+    const { username, password } = this.state;
     return (
       <div>
         <h1>Log In</h1>
@@ -68,13 +55,6 @@ class Login extends Component {
             type="text"
             name="username"
             value={username}
-            onChange={this.handleChange}
-          />
-          <input
-            placeholder="email"
-            type="text"
-            name="email"
-            value={email}
             onChange={this.handleChange}
           />
           <input

@@ -1,38 +1,42 @@
-.App {
-  text-align: center;
+
+body {
+  display: grid;
+  grid-template-columns: 0.6fr 1fr 1.8fr 1fr 0.6fr;
+  grid-template-rows: 0.1fr 2fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    ". . search . ."
+    ". nav feed sub .";
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.feed { grid-area: feed; }
+
+.nav { grid-area: nav; }
+
+.sub { grid-area: sub; }
+
+.search { grid-area: search; } 
+
+
+.navbar {
+  grid-area: nav;
+  position: relative;
+  background-color: #1a83ff;
+  /* width: 400px; */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+.navbar a {
+  background-color: #1a83ff; /* Grey background color */
+  color: black; /* Black text color */
+  display: block; /* Make the links appear below each other */
+  padding: 25px; /* Add some padding */
+  text-decoration: none; /* Remove underline from links */
+  font-size: x-large;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.navbar a:hover {
+  background-color: #5ba4f8; 
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

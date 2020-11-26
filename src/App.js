@@ -1,87 +1,68 @@
 import React, { Component } from 'react';
-import axios from 'axios'
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
+import NavBar from './Components/NavBar'
 import Home from './Components/Home'
-import Login from './Components/registrations/Login'
-import Signup from './Components/registrations/Signup'
+import Signup from './Components/Signup';
+import Login from './Components/Login';
+import './App.css'
 
 
 class App extends Component {
   state = { 
-      isLoggedIn: false,
-      user: {}
-     };
+    user: null 
+  };
   
   componentDidMount() {
-      this.loginStatus()
+    const token = localStorage.getItem("token")
+    if (token) {
+      fetch("http://localhost:4000/api/v1/profile", {
+        method: "GET",
+        headers: { authorization: `Bearer ${token}` }
+      })
+        .then(r => r.json())
+        .then(data => this.setState({ user: data.user }))
+    } else {
+      // this.props.history.push("/login")
+    }
+  };
+
+  handleSignup = (data) => {
+    this.setState({ user: data.user })
+    localStorage.setItem("token", data.jwt);
   }
 
-  loginStatus = () => {
-      axios.get('http://localhost:3001/logged_in', {withCredentials: true})
-      .then(response => {
-        if (response.data.logged_in) {
-          this.handleLogin(response)
-        } else {
-          this.handleLogout()
-        }
-      })
-      .catch(error => console.log('api errors:', error))
+  handleLogin = (userInfo) => {
+    fetch('http://localhost:4000/api/v1/login', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ user: userInfo })
+    })
+      .then(r => r.json())
+      .then(data => {
+        this.setState({ user: data.user })
+        localStorage.setItem("token", data.jwt)
+    })
   }
   
-  handleLogin = (data) => {
-      this.setState({
-        isLoggedIn: true,
-        user: data.user
-      })
-  }
-  
+
   handleLogout = () => {
-      this.setState({
-      isLoggedIn: false,
-      user: {}
-      })
+    localStorage.removeItem("token")
+    this.setState({ user: null })
+    this.props.history.push("/")
   }
   
   render() {
       return (
         <div>
-          <BrowserRouter>
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={(props) => (
-                  <Home
-                    {...props}
-                    handleLogout={this.handleLogout}
-                    loggedInStatus={this.state.isLoggedIn}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/login"
-                render={(props) => (
-                  <Login
-                    {...props}
-                    handleLogin={this.handleLogin}
-                    loggedInStatus={this.state.isLoggedIn}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/signup"
-                render={(props) => (
-                  <Signup
-                    {...props}
-                    handleLogin={this.handleLogin}
-                    loggedInStatus={this.state.isLoggedIn}
-                  />
-                )}
-              />
-            </Switch>
-          </BrowserRouter>
+          <NavBar />
+          <Home />
+          <Switch>
+            <Route path="/signup" render={() => <Signup />} />
+            <Route path="/login" render={() => <Login />} />
+          </Switch>
         </div>
       );
     }

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+
 class Signup extends Component {
     state = { 
       username: '',
       email: '',
       password: '',
-      password_confirmation: '',
-      errors: ''
-     };
+    };
   
     handleChange = (event) => {
         const {name, value} = event.target
@@ -15,31 +13,36 @@ class Signup extends Component {
         [name]: value
         })
     };
+
     handleSubmit = (event) => {
         event.preventDefault()
-        const {username, email, password, password_confirmation} = this.state
+        const { username, email, password } = this.state
         let user = {
-        username: username,
-        email: email,
-        password: password,
-        password_confirmation: password_confirmation
+            username: username,
+            email: email,
+            password: password,
+            bio: "",
+            image: ""
         }
-    axios.post('http://localhost:3001/users', {user}, {withCredentials: true})
-        .then(response => {
-        if (response.data.status === 'created') {
-            this.props.handleLogin(response.data)
-            this.redirect()
-        } else {
-            this.setState({
-            errors: response.data.errors
-            })
-        }
+        fetch("http://localhost:4000/api/v1/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify({ user: user }),
         })
-        .catch(error => console.log('api errors:', error))
-    };
+            .then((r) => r.json())
+            .then((data) => {
+                this.props.handleSignup(data)
+                this.redirect()
+        })
+    }
+   
     redirect = () => {
         this.props.history.push('/')
     }
+
     handleErrors = () => {
         return (
         <div>
@@ -50,8 +53,11 @@ class Signup extends Component {
         </div>
         )
     }
+
+
+
     render() {
-        const {username, email, password, password_confirmation} = this.state
+        const {username, email, password} = this.state
     return (
         <div>
             <h1>Sign Up</h1>
@@ -75,13 +81,6 @@ class Signup extends Component {
                 type="password"
                 name="password"
                 value={password}
-                onChange={this.handleChange}
-            />
-            <input
-                placeholder="password confirmation"
-                type="password"
-                name="password_confirmation"
-                value={password_confirmation}
                 onChange={this.handleChange}
             />
             
