@@ -17,7 +17,8 @@ class App extends Component {
     user: null,
     userIndex: [],
     showLogin: false,
-    showSignup: false
+    showSignup: false,
+    feed: []
   };
 
   toggleLogin = () => {
@@ -36,11 +37,12 @@ class App extends Component {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((r) => r.json())
-        .then((user) => {
+        .then((data) => {
           // debugger
           this.setState({
-            user: user,
-          });
+            user: data.user,
+            feed: data.feed
+          },() => console.log(data.feed));
         });
     } else {
       console.log("no user logged in")
@@ -104,9 +106,11 @@ class App extends Component {
   };
 
   render() {
+
     return (
       <div className="main">
-        <Feed />
+        {this.state.user ? <Feed haikus={this.state.feed}/> : null }
+        
         <NavBar />
         <Welcome
           currentUser={this.state.user}
