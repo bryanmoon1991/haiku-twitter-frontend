@@ -15,6 +15,7 @@ import './App.css'
 class App extends Component {
   state = {
     user: null,
+    userIndex: [],
     showLogin: false,
     showSignup: false
   };
@@ -37,11 +38,26 @@ class App extends Component {
         .then((r) => r.json())
         .then((user) => {
           // debugger
-          this.setState({ user: user });
+          this.setState({
+            user: user,
+          });
         });
     } else {
       console.log("no user logged in")
       // this.props.history.push("/login")
+      fetch('http://localhost:4000/api/v1/users')
+        .then(response => response.json())
+        .then(data => {
+          let userArr = []
+          data.map(user => userArr.push({
+              id: user.id,
+              username: user.username,
+              bio: user.bio,
+              image: user.image
+            }))
+          this.setState({ userIndex: userArr })
+          console.log(userArr)
+        });
     }
   }
 
