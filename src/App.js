@@ -35,11 +35,17 @@ class App extends Component {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((r) => r.json())
-        .then((data) => this.setState({ user: data.user }));
+        .then((user) => {
+          // debugger
+          this.setState({ user: user });
+        });
     } else {
+      console.log("no user logged in")
       // this.props.history.push("/login")
     }
   }
+
+
 
   handleSignup = (user) => {
     fetch("http://localhost:4000/api/v1/users", {
@@ -74,9 +80,11 @@ class App extends Component {
   };
 
   handleLogout = () => {
+    console.log("logged out")
     localStorage.removeItem("token");
     this.setState({ user: null });
-    this.props.history.push("/");
+
+    // this.props.history.push("/"); dont know why this isnt working...but logout works just as it is
   };
 
   render() {
@@ -85,8 +93,10 @@ class App extends Component {
         <Home />
         <NavBar />
         <Welcome
+          currentUser={this.state.user}
           toggleLogin={this.toggleLogin}
           toggleSignup={this.toggleSignup}
+          handleLogout={this.handleLogout}
         />
         <Signup
           showSignup={this.state.showSignup}
