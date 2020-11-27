@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom'
 import { NavBar } from './Components/NavBar'
-import Home from './Components/Home'
+import { Feed } from './Components/Feed'
 import { Welcome } from './Components/Welcome'
 import { Signup } from './Components/Signup';
 import { Login } from './Components/Login';
@@ -90,7 +90,7 @@ class App extends Component {
   render() {
     return (
       <div className="main">
-        <Home />
+        <Feed />
         <NavBar />
         <Welcome
           currentUser={this.state.user}

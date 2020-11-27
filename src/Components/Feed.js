@@ -1,7 +1,7 @@
 import React from "react";
-import "./Home.css"
+import "./Feed.css"
 
-const Home = () => {
+export const Feed = () => {
 
   return (
     <div className="feed">
@@ -15,4 +15,3 @@ const Home = () => {
     </div>
   );
 };
-export default Home;

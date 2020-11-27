@@ -52,7 +52,7 @@ export const Signup = (props) => {
 
     const handleChange = (event) => {
         const { name, value } = event.target
-        setState((prevState => ({ ...prevState, [name]: value })));
+        setState(prevState => ({ ...prevState, [name]: value }));
     }
 
     const handleSubmit = (event) => {
