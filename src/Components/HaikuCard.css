@@ -1,0 +1,13 @@
+.haiku-card{
+    border: 2px solid black;
+
+
+}
+
+img {
+    width: 40px;
+    height: 40px;
+}
+p{
+    text-align: center;
+}

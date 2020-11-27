@@ -1,17 +1,14 @@
 import React from "react";
+import HaikuCard from './HaikuCard'
 import "./Feed.css"
 
-export const Feed = () => {
+export const Feed = ({haikus}) => {
 
   return (
     <div className="feed">
-      <ul>
-        <li>This is where the feed would go</li>
-        <li>This is where the feed would go</li>
-        <li>This is where the feed would go</li>
-        <li>This is where the feed would go</li>
-        <li>This is where the feed would go</li>
-      </ul>
+
+        {haikus.map(haikuObj => <HaikuCard key={haikuObj.id} haiku={haikuObj}/>)}
+
     </div>
   );
 };
