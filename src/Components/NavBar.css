@@ -1,1 +1,18 @@
+.navbar {
+  grid-area: nav;
+  background-color: #1a83ff;
+}
 
+
+.navbar a {
+  background-color: #1a83ff; /* Grey background color */
+  color: black; /* Black text color */
+  display: block; /* Make the links appear below each other */
+  padding: 25px; /* Add some padding */
+  text-decoration: none; /* Remove underline from links */
+  font-size: x-large;
+}
+
+.navbar a:hover {
+  background-color: #5ba4f8; 
+}

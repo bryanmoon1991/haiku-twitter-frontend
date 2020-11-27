@@ -1,23 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import './NavBar.css'
+import './NavBar.css'
 
-function NavBar() {
+const NavBar = ({openLogin, openSignup}) => {
+
+
+  const handleClick = () => {
+    console.log("Clicked")
+  }
+
+
     return (
       <>
         <div className="navbar">
-              <Link to={"/home"}>
-                <span>Home</span>
-              </Link>
-              <Link to={"/explore"}>
-                <span>Explore</span>
-              </Link>
-              <Link to={"/signup"}>
-                <span>Sign Up</span>
-              </Link>
-              <Link to={"/login"}>
-                <span>Log In</span>
-              </Link>
+          <Link to={"/home"}>
+            <span>Home</span>
+          </Link>
+          <Link to={"/explore"}>
+            <span>Explore</span>
+          </Link>
+          <a onClick={openSignup}>Sign Up</a>
+          <a onClick={openLogin}>Log In</a>
         </div>
       </>
     );

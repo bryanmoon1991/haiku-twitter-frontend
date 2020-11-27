@@ -1,0 +1,4 @@
+.feed {
+    grid-area: feed;
+    border: 2px solid #ccc
+}

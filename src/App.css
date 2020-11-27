@@ -1,5 +1,5 @@
 
-body {
+.main {
   display: grid;
   grid-template-columns: 0.6fr 1fr 1.8fr 1fr 0.6fr;
   grid-template-rows: 0.1fr 2fr;
@@ -18,25 +18,5 @@ body {
 .search { grid-area: search; } 
 
 
-.navbar {
-  grid-area: nav;
-  position: relative;
-  background-color: #1a83ff;
-  /* width: 400px; */
-}
-
-
-.navbar a {
-  background-color: #1a83ff; /* Grey background color */
-  color: black; /* Black text color */
-  display: block; /* Make the links appear below each other */
-  padding: 25px; /* Add some padding */
-  text-decoration: none; /* Remove underline from links */
-  font-size: x-large;
-}
-
-.navbar a:hover {
-  background-color: #5ba4f8; 
-}
 
 

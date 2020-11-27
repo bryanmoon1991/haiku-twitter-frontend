@@ -1,79 +1,126 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useState } from 'react';
+import { useSpring, animated } from 'react-spring';
+import styled from 'styled-components';
+import { MdClose } from 'react-icons/md';
+
+const Background = styled.div`
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalWrapper = styled.div`
+  width: 800px;
+  height: 500px;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  color: #000;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  z-index: 10;
+  border-radius: 10px;
+`;
+
+const CloseModalButton = styled(MdClose)`
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  z-index: 10;
+`;
 
 
-class Login extends Component {
-  state = {
+export const Login = (props) => {
+  const initialState = {
     username: "",
     password: "",
   };
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
-  };
+  let [{ username, password }, setState] = useState(initialState)
+  
+  const clearState = () => setState({ ...initialState })
 
-  handleSubmit = (event) => {
+  const handleChange = (event) => {
+        const { name, value } = event.target
+        setState((prevState => ({ ...prevState, [name]: value })));
+  }
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const { username, password } = this.state;
     let user = {
       username: username,
       password: password,
     };
-    this.props.handleLogin(user)
-    this.redirect()
+    props.handleLogin(user)
+    redirect()
+  };
+
+  const redirect = () => {
+    props.history.push("/");
   };
 
 
-  redirect = () => {
-    this.props.history.push("/");
+  const modalRef = useRef();
+
+  const animation = useSpring({
+    config: {
+      duration: 250,
+    },
+    opacity: props.showLogin ? 1 : 0,
+    transform: props.showLogin ? `translateY(0%)` : `translateY(-100%)`,
+  });
+
+  const closeModal = (e) => {
+    if (modalRef.current === e.target) {
+      props.openLogin();
+    }
   };
 
-
-  handleErrors = () => {
-    return (
-      <div>
-        <ul>
-          {this.state.errors.map((error) => {
-            return <li key={error}>{error}</li>;
-          })}
-        </ul>
-      </div>
-    );
-  };
-  
-  render() {
-    const { username, password } = this.state;
-    return (
-      <div>
-        <h1>Log In</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            placeholder="username"
-            type="text"
-            name="username"
-            value={username}
-            onChange={this.handleChange}
-          />
-          <input
-            placeholder="password"
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-          />
-          <button placeholder="submit" type="submit">
-            Log In
-          </button>
-          <div>
-            or <Link to="/signup">sign up</Link>
-          </div>
-        </form>
-        <div>{this.state.errors ? this.handleErrors() : null}</div>
-      </div>
-    );
-  }
+  return (
+    <>
+      {props.showLogin ? (
+        <Background onClick={closeModal} ref={modalRef}>
+          <animated.div style={animation}>
+            <ModalWrapper showLogin={props.showLogin}>
+              <div>
+                <h1>Log In</h1>
+                <form onSubmit={handleSubmit}>
+                  <input
+                    placeholder="username"
+                    type="text"
+                    name="username"
+                    value={username}
+                    onChange={handleChange}
+                  />
+                  <input
+                    placeholder="password"
+                    type="password"
+                    name="password"
+                    value={password}
+                    onChange={handleChange}
+                  />
+                  <button placeholder="submit" type="submit">
+                    Log In
+                  </button>
+        
+                </form>
+                  </div>
+              <CloseModalButton
+                aria-label='Close modal'
+                onClick={() => props.openLogin()}
+              />
+            </ModalWrapper>
+          </animated.div>
+        </Background>
+      )  : null }
+    </>
+  );
 }
-export default Login;

@@ -1,10 +1,17 @@
 import React from "react";
+import "./Home.css"
 
-const Home = (props) => {
+const Home = () => {
 
   return (
-    <div>
- 
+    <div className="feed">
+      <ul>
+        <li>This is where the feed would go</li>
+        <li>This is where the feed would go</li>
+        <li>This is where the feed would go</li>
+        <li>This is where the feed would go</li>
+        <li>This is where the feed would go</li>
+      </ul>
     </div>
   );
 };
