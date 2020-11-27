@@ -1,16 +1,24 @@
 .navbar {
   grid-area: nav;
   background-color: #1a83ff;
+  height: 100vh;
 }
 
+.navbar span {
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  font-size: x-large;
+  padding: 25px; /* Add some padding */
+  list-style: none;
+}
 
 .navbar a {
-  background-color: #1a83ff; /* Grey background color */
+  /* background-color: #1a83ff; Grey background color */
   color: black; /* Black text color */
-  display: block; /* Make the links appear below each other */
-  padding: 25px; /* Add some padding */
   text-decoration: none; /* Remove underline from links */
-  font-size: x-large;
+  display: flex; /* Make the links appear below each other */
+  align-items: center;
 }
 
 .navbar a:hover {

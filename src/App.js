@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom'
 import { NavBar } from './Components/NavBar'
 import Home from './Components/Home'
+import { Welcome } from './Components/Welcome'
 import { Signup } from './Components/Signup';
 import { Login } from './Components/Login';
+import { Explore } from './Components/Explore'
+import { Favorites } from './Components/Favorites'
+import { Following } from './Components/Following'
+import { Followers } from './Components/Followers'
 import './App.css'
 
 
@@ -14,11 +19,11 @@ class App extends Component {
     showSignup: false
   };
 
-  openLogin = () => {
+  toggleLogin = () => {
     this.setState({ showLogin: !this.state.showLogin });
   };
 
-  openSignup = () => {
+  toggleSignup = () => {
     this.setState({ showSignup: !this.state.showSignup });
   };
 
@@ -46,10 +51,10 @@ class App extends Component {
       body: JSON.stringify({ user: user }),
     })
       .then((r) => r.json())
-      .then((data) => { });
-    
-    this.setState({ user: data.user });
-    localStorage.setItem("token", data.jwt);
+      .then((data) => { 
+        this.setState({ user: data.user });
+        localStorage.setItem("token", data.jwt);
+      });
   };
 
   handleLogin = (userInfo) => {
@@ -78,17 +83,27 @@ class App extends Component {
     return (
       <div className="main">
         <Home />
-        <NavBar
-          openLogin={this.openLogin}
-          openSignup={this.openSignup} />
+        <NavBar />
+        <Welcome
+          toggleLogin={this.toggleLogin}
+          toggleSignup={this.toggleSignup}
+        />
         <Signup
           showSignup={this.state.showSignup}
-          openSignup={this.openSignup}
+          toggleSignup={this.toggleSignup}
+          handleSignup={this.handleSignup}
         />
         <Login
           showLogin={this.state.showLogin}
-          openLogin={this.openLogin} />
-        <Switch></Switch>
+          toggleLogin={this.toggleLogin}
+          handleLogin={this.handleLogin}
+        />
+        <Switch>
+          <Route to="/explore" render={()=> <Explore/>} />
+          <Route to="/favorites" render={()=> <Favorites/>} />
+          <Route to="/following" render={()=> <Following/>} />
+          <Route to="/followers" render={()=> <Followers/>} />
+        </Switch>
       </div>
     );
   }

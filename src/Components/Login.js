@@ -14,13 +14,11 @@ const Background = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  width: 800px;
-  height: 500px;
+  width: 400px;
+  height: 300px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
   background: #fff;
   color: #000;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   position: relative;
   z-index: 10;
   border-radius: 10px;
@@ -60,7 +58,7 @@ export const Login = (props) => {
       password: password,
     };
     props.handleLogin(user)
-    props.openLogin()
+    props.toggleLogin()
     clearState()
   };
 
@@ -77,7 +75,7 @@ export const Login = (props) => {
 
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
-      props.openLogin();
+      props.toggleLogin();
     }
   };
 
@@ -112,7 +110,7 @@ export const Login = (props) => {
                   </div>
               <CloseModalButton
                 aria-label='Close modal'
-                onClick={() => props.openLogin()}
+                onClick={() => props.toggleLogin()}
               />
             </ModalWrapper>
           </animated.div>

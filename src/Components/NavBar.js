@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import * as RiIcons from 'react-icons/ri'
 import './NavBar.css'
 
 export const NavBar = ({openLogin, openSignup}) => {
@@ -8,13 +9,15 @@ export const NavBar = ({openLogin, openSignup}) => {
       <>
         <div className="navbar">
           <Link to={"/home"}>
-            <span>Home</span>
+            <span>{ <RiIcons.RiHome7Line/> }  Home</span>
           </Link>
           <Link to={"/explore"}>
-            <span>Explore</span>
+            <span>{ <RiIcons.RiBubbleChartLine/> }  Explore</span>
           </Link>
-          <a onClick={openSignup}>Sign Up</a>
-          <a onClick={openLogin}>Log In</a>
+          <Link to={"/profile"}>
+            <span>{ <RiIcons.RiUserLine/> }  Profile</span>
+          </Link>
+
         </div>
       </>
     );
