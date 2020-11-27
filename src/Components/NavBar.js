@@ -2,13 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './NavBar.css'
 
-const NavBar = ({openLogin, openSignup}) => {
-
-
-  const handleClick = () => {
-    console.log("Clicked")
-  }
-
+export const NavBar = ({openLogin, openSignup}) => {
 
     return (
       <>
@@ -26,4 +20,3 @@ const NavBar = ({openLogin, openSignup}) => {
     );
 }
 
-export default NavBar

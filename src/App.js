@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom'
-import NavBar from './Components/NavBar'
+import { NavBar } from './Components/NavBar'
 import Home from './Components/Home'
 import { Signup } from './Components/Signup';
 import { Login } from './Components/Login';
@@ -36,7 +36,18 @@ class App extends Component {
     }
   }
 
-  handleSignup = (data) => {
+  handleSignup = (user) => {
+    fetch("http://localhost:4000/api/v1/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ user: user }),
+    })
+      .then((r) => r.json())
+      .then((data) => { });
+    
     this.setState({ user: data.user });
     localStorage.setItem("token", data.jwt);
   };

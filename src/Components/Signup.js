@@ -66,35 +66,22 @@ export const Signup = (props) => {
         bio: "",
         image: "",
         };
-        fetch("http://localhost:4000/api/v1/users", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-        },
-        body: JSON.stringify({ user: user }),
-        })
-        .then((r) => r.json())
-        .then((data) => {
-            props.handleSignup(data);
-            redirect();
-        });
+        
+        props.handleSignup(user);
+        // this will close the modal but we should figure out how to handle errors
+        props.openSignup();
+        clearState()
     };
-
-    const redirect = () => {
-        props.history.push("/");
-    };
-
 
 
     const modalRef = useRef();
 
     const animation = useSpring({
-    config: {
-        duration: 250,
-    },
-    opacity: props.showSignup ? 1 : 0,
-    transform: props.showSignup ? `translateY(0%)` : `translateY(-100%)`,
+        config: {
+            duration: 250,
+        },
+        opacity: props.showSignup ? 1 : 0,
+        transform: props.showSignup ? `translateY(0%)` : `translateY(-100%)`,
     });
 
     const closeModal = (e) => {

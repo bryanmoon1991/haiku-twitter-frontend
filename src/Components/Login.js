@@ -60,11 +60,8 @@ export const Login = (props) => {
       password: password,
     };
     props.handleLogin(user)
-    redirect()
-  };
-
-  const redirect = () => {
-    props.history.push("/");
+    props.openLogin()
+    clearState()
   };
 
 
