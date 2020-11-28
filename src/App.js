@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom';
 import { NavBar } from './Components/NavBar'
-import { Feed } from './Components/Feed'
 import { Welcome } from './Components/Welcome'
 import { Signup } from './Components/Signup';
 import { Login } from './Components/Login';
-import { Explore } from './Components/Explore'
-import { Favorites } from './Components/Favorites'
-import { Following } from './Components/Following'
-import { Followers } from './Components/Followers'
+import { Home } from './Components/Home';
+import { Profile } from './Components/Profile';
+import { Explore } from './Components/Explore';
+import { Favorites } from './Components/Favorites';
+import { Following } from './Components/Following';
+import { Followers } from './Components/Followers';
 import './App.css'
 
 
@@ -16,9 +17,9 @@ class App extends Component {
   state = {
     user: null,
     userIndex: [],
+    haikusFromFollowing: [],
     showLogin: false,
     showSignup: false,
-    feed: []
   };
 
   toggleLogin = () => {
@@ -41,8 +42,8 @@ class App extends Component {
           // debugger
           this.setState({
             user: data.user,
-            feed: data.feed
-          },() => console.log(data.feed));
+            haikusFromFollowing: data.feed
+          }, () => {console.log(this.state.user, this.state.haikusFromFollowing)});
         });
     } else {
       console.log("no user logged in")
@@ -109,19 +110,65 @@ class App extends Component {
 
     return (
       <div className="main">
-<<<<<<< HEAD
-=======
-        {this.state.user ? <Feed haikus={this.state.feed}/> : null }
-        
->>>>>>> 79c52eb402bd70d5449b5e11cd02c4d1b128760b
+        {/* {this.state.user ? <Feed haikus={this.state.feed}/> : null } */}
+
         <NavBar />
-        <Feed currentUser={this.state.user} />
+
+        <Route
+          path="/explore"
+          render={() => (
+            <Explore 
+              userIndex={this.state.userIndex} 
+            />
+          )}
+        />
+
+          <Switch>
+            <Route
+              path="/home"
+              render={() => (
+                <Home
+                  currentUser={this.state.user}
+                  haikusFromFollowing={this.state.haikusFromFollowing}
+                />
+              )}
+            />
+            <Route 
+              path="/profile" 
+              render={() => (
+                <Profile 
+                  currentUser={this.state.user}
+                />
+              )} 
+            />
+            <Route path="/favorites" render={() => (
+                <Favorites 
+                  currentUser={this.state.user}
+                />
+              )} 
+            />
+            <Route path="/following" render={() => (
+                <Following 
+                  currentUser={this.state.user}
+                />
+              )} 
+            />
+            <Route path="/followers" render={() => (
+                <Followers 
+                  currentUser={this.state.user}
+                />
+              )} 
+            />
+          </Switch>
+
         <Welcome
           currentUser={this.state.user}
           toggleLogin={this.toggleLogin}
           toggleSignup={this.toggleSignup}
           handleLogout={this.handleLogout}
         />
+
+        {/* Modals */}
         <Signup
           showSignup={this.state.showSignup}
           toggleSignup={this.toggleSignup}
@@ -132,12 +179,6 @@ class App extends Component {
           toggleLogin={this.toggleLogin}
           handleLogin={this.handleLogin}
         />
-        <Switch>
-          <Route to="/explore" render={()=> <Explore/>} />
-          <Route to="/favorites" render={()=> <Favorites/>} />
-          <Route to="/following" render={()=> <Following/>} />
-          <Route to="/followers" render={()=> <Followers/>} />
-        </Switch>
       </div>
     );
   }
