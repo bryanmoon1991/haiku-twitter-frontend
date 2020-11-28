@@ -1,4 +1,10 @@
 .feed {
     grid-area: feed;
-    border: 2px solid #ccc
+    border: 2px solid #ccc;
+    height: 100vh;
+    overflow: scroll;
+    justify-content: center;
+    display: table-column;
+    position: relative;
+
 }
