@@ -106,8 +106,8 @@ class App extends Component {
   render() {
     return (
       <div className="main">
-        <Feed />
         <NavBar />
+        <Feed currentUser={this.state.user} />
         <Welcome
           currentUser={this.state.user}
           toggleLogin={this.toggleLogin}
