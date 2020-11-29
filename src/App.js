@@ -130,6 +130,7 @@ class App extends Component {
             <Explore
               currentUser={this.state.user}
               userIndex={this.state.userIndex}
+              getProfile={this.getProfile}
             />
           )}
         />
@@ -141,6 +142,7 @@ class App extends Component {
               <Home
                 currentUser={this.state.user}
                 haikusFromFollowing={this.state.haikusFromFollowing}
+                getProfile={this.getProfile}
               />
             )}
           />

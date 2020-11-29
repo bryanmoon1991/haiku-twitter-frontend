@@ -5,7 +5,7 @@ export const ProfileCard = ({user, getProfile}) => {
     return (
         <div className="profile-card">
             <img src={user.image} alt="profile-picture"/>
-            <h3>{user.username}</h3>
+           <Link to={`/users/${user.id}`} onClick={() => getProfile(user.id) }><h3>{user.username}</h3></Link>
             <p>{user.bio}</p>
             <div>
                 <Link to={`/users/${user.id}/followers`} onClick={() => getProfile(user.id) }>Followers</Link>
