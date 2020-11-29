@@ -5,6 +5,7 @@ import { Welcome } from './Components/Welcome'
 import { Signup } from './Components/Signup';
 import { Login } from './Components/Login';
 import { Compose } from './Components/Compose';
+import { EditProfile } from './Components/EditProfile';
 import { Home } from './Components/Home';
 import { ProfileContainer } from './Components/ProfileContainer';
 import { Explore } from './Components/Explore';
@@ -12,8 +13,6 @@ import './App.css'
 
 
 class App extends Component {
-
-
   state = {
     user: null,
     userIndex: [],
@@ -23,6 +22,7 @@ class App extends Component {
     showLogin: false,
     showSignup: false,
     showCompose: false,
+    showEditProfile: false,
   };
 
   toggleLogin = () => {
@@ -35,6 +35,10 @@ class App extends Component {
 
   toggleCompose = () => {
     this.setState({ showCompose: !this.state.showCompose });
+  };
+
+  toggleEditProfile = () => {
+    this.setState({ showEditProfile: !this.state.showEditProfile });
   };
 
   componentDidMount() {
@@ -63,14 +67,14 @@ class App extends Component {
         fetch('http://localhost:4000/api/v1/users'),
         fetch('http://localhost:4000/api/v1/haikus'),
       ])
-      .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
-      .then(([data1, data2]) =>
-      this.setState(
-        {
-          userIndex: data1,
-          feed: data2,
-        },
-        () => {
+        .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+        .then(([data1, data2]) =>
+          this.setState(
+            {
+              userIndex: data1,
+              feed: data2,
+            },
+            () => {
               console.log('no user logged in');
               console.log('non-user CDM:', this.state);
             }
@@ -92,7 +96,7 @@ class App extends Component {
       .then((data) => {
         this.setState({ user: data.user });
         localStorage.setItem('token', data.jwt);
-        this.props.history.push('/explore'); 
+        this.props.history.push('/explore');
       });
   };
 
@@ -101,7 +105,7 @@ class App extends Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
       body: JSON.stringify({ user: userInfo }),
     })
@@ -114,36 +118,36 @@ class App extends Component {
         });
         console.log(this.state);
         localStorage.setItem('token', data.jwt);
-        this.props.history.push('/home'); 
+        this.props.history.push('/home');
       });
   };
 
   createHaiku = (haiku) => {
-    fetch('http://localhost:4000/api/v1/haikus',{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-              user_id: this.state.user.id,
-              first: haiku.first,
-              second: haiku.second,
-              third: haiku.third
-            })
-        })
-        .then(r => r.json())
-        .then(data => {
-          console.log(data)
-          this.props.history.push(`/users/${this.state.user.id}`)
-        }
-      )}
+    fetch('http://localhost:4000/api/v1/haikus', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: this.state.user.id,
+        first: haiku.first,
+        second: haiku.second,
+        third: haiku.third,
+      }),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        console.log(data);
+        this.props.history.push(`/users/${this.state.user.id}`);
+      });
+  };
 
   handleLogout = () => {
     console.log('logged out');
     localStorage.removeItem('token');
     this.setState({ user: null, feed: [] }, () => {
-      this.props.history.push("/home"); 
+      this.props.history.push('/explore');
     });
   };
 
@@ -160,6 +164,27 @@ class App extends Component {
         });
       });
   };
+
+  editProfile = (user) => {
+    const token = localStorage.getItem('token');
+    fetch(`http://localhost:4000/api/v1/users/${this.state.user.id}`,{
+            method: "PATCH",
+            headers: {
+                authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(user)
+        })
+        .then(r => r.json())
+        .then(user => {
+          console.log(user)
+          this.setState({user: user})
+          this.getProfile(user.id)
+          this.props.history.push(`/users/${user.id}`)
+
+        })
+  }
 
   render() {
     return (
@@ -210,6 +235,7 @@ class App extends Component {
           toggleLogin={this.toggleLogin}
           toggleSignup={this.toggleSignup}
           handleLogout={this.handleLogout}
+          toggleEditProfile={this.toggleEditProfile}
         />
 
         {/* Modals */}
@@ -228,6 +254,15 @@ class App extends Component {
           showCompose={this.state.showCompose}
           createHaiku={this.createHaiku}
         />
+        {this.state.user ?
+        <EditProfile
+          toggleEditProfile={this.toggleEditProfile}
+          showEditProfile={this.state.showEditProfile}
+          editProfile={this.editProfile}
+          currentUser={this.state.user}
+        /> :
+        null
+        }
       </div>
     );
   }

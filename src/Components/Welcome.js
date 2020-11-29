@@ -2,7 +2,7 @@ import React from 'react'
 import * as RiIcons from "react-icons/ri";
 import './Welcome.css'
 
-export const Welcome = ({toggleSignup, toggleLogin, currentUser, handleLogout}) => {
+export const Welcome = ({toggleSignup, toggleLogin, toggleEditProfile, currentUser, handleLogout}) => {
 
     return (
       <>
@@ -11,6 +11,7 @@ export const Welcome = ({toggleSignup, toggleLogin, currentUser, handleLogout}) 
                     <div className="welcome">
                         <h2>Welcome {currentUser.username}</h2>
                         <a onClick={handleLogout}>Logout</a>
+                        <a onClick={toggleEditProfile}>Edit Profile</a>
                     </div>
                 )
             :
