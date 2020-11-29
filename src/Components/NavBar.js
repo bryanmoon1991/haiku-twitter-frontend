@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import * as RiIcons from 'react-icons/ri'
 import './NavBar.css'
 
-export const NavBar = ({openLogin, openSignup}) => {
+export const NavBar = ({currentUser, getProfile}) => {
 
     return (
       <>
@@ -14,9 +14,12 @@ export const NavBar = ({openLogin, openSignup}) => {
           <Link to={"/explore"}>
             <span>{ <RiIcons.RiBubbleChartLine/> }  Explore</span>
           </Link>
-          <Link to={"/profile"}>
+          {currentUser ? 
+          <Link to={`/users/${currentUser.id}`} onClick={ ()=> getProfile(currentUser.id) }>
             <span>{ <RiIcons.RiUserLine/> }  Profile</span>
           </Link>
+          : null
+          }
 
         </div>
       </>

@@ -5,8 +5,8 @@ import './Home.css'
 export const Home = ({currentUser, haikusFromFollowing}) => {
     return (
       <div className="feed">
-        {haikusFromFollowing.map((haikuObj) => (
-          <HaikuCard key={haikuObj.id} haiku={haikuObj} />
+        {haikusFromFollowing.map((haiku) => (
+          <HaikuCard key={haiku.id} haiku={haiku} />
         ))}
       </div>
     );

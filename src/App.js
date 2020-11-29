@@ -5,7 +5,7 @@ import { Welcome } from './Components/Welcome'
 import { Signup } from './Components/Signup';
 import { Login } from './Components/Login';
 import { Home } from './Components/Home';
-import { Profile } from './Components/Profile';
+import { ProfileContainer } from './Components/ProfileContainer';
 import { Explore } from './Components/Explore';
 import { Favorites } from './Components/Favorites';
 import { Following } from './Components/Following';
@@ -18,6 +18,8 @@ class App extends Component {
     user: null,
     userIndex: [],
     haikusFromFollowing: [],
+    profile: null,
+    profilesFavorites: [],
     showLogin: false,
     showSignup: false,
   };
@@ -42,8 +44,9 @@ class App extends Component {
           // debugger
           this.setState({
             user: data.user,
-            haikusFromFollowing: data.feed
-          }, () => {console.log(this.state.user, this.state.haikusFromFollowing)});
+            haikusFromFollowing: data.feed,
+            userIndex: data.unfollowedUsers
+          }, () => {console.log("CDM:", this.state)});
         });
     } else {
       console.log("no user logged in")
@@ -51,15 +54,17 @@ class App extends Component {
       fetch('http://localhost:4000/api/v1/users')
         .then(response => response.json())
         .then(data => {
-          let userArr = []
-          data.map(user => userArr.push({
-              id: user.id,
-              username: user.username,
-              bio: user.bio,
-              image: user.image
-            }))
-          this.setState({ userIndex: userArr })
-          console.log(userArr)
+          // let userArr = []
+          // data.map(user => {
+          //   userArr.push({
+          //     id: user.id,
+          //     username: user.username,
+          //     bio: user.bio,
+          //     image: user.image
+          //   })
+          // })
+          this.setState({ userIndex: data })
+          console.log(data)
         });
     }
   }
@@ -93,7 +98,14 @@ class App extends Component {
     })
       .then((r) => r.json())
       .then((data) => {
-        this.setState({ user: data.user });
+        this.setState(
+          {
+            user: data.user,
+            haikusFromFollowing: data.feed,
+            userIndex: data.unfollowedUsers,
+          }
+        );
+        console.log(this.state)
         localStorage.setItem("token", data.jwt);
       });
   };
@@ -101,65 +113,74 @@ class App extends Component {
   handleLogout = () => {
     console.log("logged out")
     localStorage.removeItem("token");
-    this.setState({ user: null });
-
+    this.setState({ user: null, haikusFromFollowing: [] });
     // this.props.history.push("/"); dont know why this isnt working...but logout works just as it is
   };
+
+
+  getProfile = (id) => {
+    // not sure if this will work
+    this.setState({profile: null, profilesFavorites: []})
+
+    fetch(`http://localhost:4000/api/v1/users/${id}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log("in get profile:", data)
+        this.setState({profile: data.user, profilesFavorites: data.favorites})
+      });
+  }
+
 
   render() {
 
     return (
       <div className="main">
-        {/* {this.state.user ? <Feed haikus={this.state.feed}/> : null } */}
-
-        <NavBar />
+        <NavBar currentUser={this.state.user} getProfile={this.getProfile} />
 
         <Route
           path="/explore"
           render={() => (
-            <Explore 
-              userIndex={this.state.userIndex} 
+            <Explore
+              currentUser={this.state.user}
+              userIndex={this.state.userIndex}
             />
           )}
         />
 
-          <Switch>
-            <Route
-              path="/home"
-              render={() => (
-                <Home
-                  currentUser={this.state.user}
-                  haikusFromFollowing={this.state.haikusFromFollowing}
-                />
-              )}
-            />
-            <Route 
-              path="/profile" 
-              render={() => (
-                <Profile 
-                  currentUser={this.state.user}
-                />
-              )} 
-            />
-            <Route path="/favorites" render={() => (
-                <Favorites 
-                  currentUser={this.state.user}
-                />
-              )} 
-            />
-            <Route path="/following" render={() => (
-                <Following 
-                  currentUser={this.state.user}
-                />
-              )} 
-            />
-            <Route path="/followers" render={() => (
-                <Followers 
-                  currentUser={this.state.user}
-                />
-              )} 
-            />
-          </Switch>
+        <Switch>
+          <Route
+            path="/home"
+            render={() => (
+              <Home
+                currentUser={this.state.user}
+                haikusFromFollowing={this.state.haikusFromFollowing}
+              />
+            )}
+          />
+          <Route
+            path="/users"
+            render={() => (
+              <ProfileContainer
+                userIndex={this.state.userIndex}
+                profile={this.state.profile}
+                profilesFavorites={this.state.profilesFavorites}
+                getProfile={this.getProfile}
+              />
+            )}
+          />
+          <Route
+            path="/favorites"
+            render={() => <Favorites currentUser={this.state.user} />}
+          />
+          <Route
+            path="/following"
+            render={() => <Following currentUser={this.state.user} />}
+          />
+          <Route
+            path="/followers"
+            render={() => <Followers currentUser={this.state.user} />}
+          />
+        </Switch>
 
         <Welcome
           currentUser={this.state.user}
