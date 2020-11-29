@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { NavBar } from './Components/NavBar'
 import { Welcome } from './Components/Welcome'
 import { Signup } from './Components/Signup';
 import { Login } from './Components/Login';
+import { Compose } from './Components/Compose';
 import { Home } from './Components/Home';
 import { ProfileContainer } from './Components/ProfileContainer';
 import { Explore } from './Components/Explore';
@@ -11,14 +12,17 @@ import './App.css'
 
 
 class App extends Component {
+
+
   state = {
     user: null,
     userIndex: [],
-    haikusFromFollowing: [],
+    feed: [],
     profile: null,
     profilesFavorites: [],
     showLogin: false,
     showSignup: false,
+    showCompose: false,
   };
 
   toggleLogin = () => {
@@ -29,100 +33,142 @@ class App extends Component {
     this.setState({ showSignup: !this.state.showSignup });
   };
 
+  toggleCompose = () => {
+    this.setState({ showCompose: !this.state.showCompose });
+  };
+
   componentDidMount() {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
-      fetch("http://localhost:4000/api/v1/profile", {
-        method: "GET",
+      fetch('http://localhost:4000/api/v1/profile', {
+        method: 'GET',
         headers: { authorization: `Bearer ${token}` },
       })
         .then((r) => r.json())
         .then((data) => {
           // debugger
-          this.setState({
-            user: data.user,
-            haikusFromFollowing: data.feed,
-            userIndex: data.unfollowedUsers
-          }, () => {console.log("CDM:", this.state)});
+          this.setState(
+            {
+              user: data.user,
+              feed: data.feed,
+              userIndex: data.unfollowedUsers,
+            },
+            () => {
+              console.log('CDM:', this.state);
+            }
+          );
         });
     } else {
-      console.log("no user logged in")
-      // this.props.history.push("/login")
-      fetch('http://localhost:4000/api/v1/users')
-        .then(response => response.json())
-        .then(data => {
-          this.setState({ userIndex: data })
-          console.log(data)
-        });
+      Promise.all([
+        fetch('http://localhost:4000/api/v1/users'),
+        fetch('http://localhost:4000/api/v1/haikus'),
+      ])
+      .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+      .then(([data1, data2]) =>
+      this.setState(
+        {
+          userIndex: data1,
+          feed: data2,
+        },
+        () => {
+              console.log('no user logged in');
+              console.log('non-user CDM:', this.state);
+            }
+          )
+        );
     }
   }
 
-
-
   handleSignup = (user) => {
-    fetch("http://localhost:4000/api/v1/users", {
-      method: "POST",
+    fetch('http://localhost:4000/api/v1/users', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify({ user: user }),
     })
       .then((r) => r.json())
-      .then((data) => { 
+      .then((data) => {
         this.setState({ user: data.user });
-        localStorage.setItem("token", data.jwt);
+        localStorage.setItem('token', data.jwt);
+        this.props.history.push('/explore'); 
       });
   };
 
   handleLogin = (userInfo) => {
-    fetch("http://localhost:4000/api/v1/login", {
-      method: "POST",
+    fetch('http://localhost:4000/api/v1/login', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify({ user: userInfo }),
     })
       .then((r) => r.json())
       .then((data) => {
-        this.setState(
-          {
-            user: data.user,
-            haikusFromFollowing: data.feed,
-            userIndex: data.unfollowedUsers,
-          }
-        );
-        console.log(this.state)
-        localStorage.setItem("token", data.jwt);
+        this.setState({
+          user: data.user,
+          feed: data.feed,
+          userIndex: data.unfollowedUsers,
+        });
+        console.log(this.state);
+        localStorage.setItem('token', data.jwt);
+        this.props.history.push('/home'); 
       });
   };
+
+  createHaiku = (haiku) => {
+    fetch('http://localhost:4000/api/v1/haikus',{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              user_id: this.state.user.id,
+              first: haiku.first,
+              second: haiku.second,
+              third: haiku.third
+            })
+        })
+        .then(r => r.json())
+        .then(data => {
+          console.log(data)
+          this.props.history.push(`/users/${this.state.user.id}`)
+        }
+      )}
 
   handleLogout = () => {
-    console.log("logged out")
-    localStorage.removeItem("token");
-    this.setState({ user: null, haikusFromFollowing: [] });
-    // this.props.history.push("/"); dont know why this isnt working...but logout works just as it is
+    console.log('logged out');
+    localStorage.removeItem('token');
+    this.setState({ user: null, feed: [] }, () => {
+      this.props.history.push("/home"); 
+    });
   };
 
-
   getProfile = (id) => {
-    this.setState({profile: null, profilesFavorites: []})
+    this.setState({ profile: null, profilesFavorites: [] });
 
     fetch(`http://localhost:4000/api/v1/users/${id}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log("in get profile:", data)
-        this.setState({profile: data.user, profilesFavorites: data.favorites})
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('in get profile:', data);
+        this.setState({
+          profile: data.user,
+          profilesFavorites: data.favorites,
+        });
       });
-  }
-
+  };
 
   render() {
-
     return (
       <div className="main">
-        <NavBar currentUser={this.state.user} getProfile={this.getProfile} />
+        <NavBar
+          currentUser={this.state.user}
+          getProfile={this.getProfile}
+          toggleCompose={this.toggleCompose}
+        />
 
         <Route
           path="/explore"
@@ -141,7 +187,7 @@ class App extends Component {
             render={() => (
               <Home
                 currentUser={this.state.user}
-                haikusFromFollowing={this.state.haikusFromFollowing}
+                feed={this.state.feed}
                 getProfile={this.getProfile}
               />
             )}
@@ -177,6 +223,11 @@ class App extends Component {
           toggleLogin={this.toggleLogin}
           handleLogin={this.handleLogin}
         />
+        <Compose
+          toggleCompose={this.toggleCompose}
+          showCompose={this.state.showCompose}
+          createHaiku={this.createHaiku}
+        />
       </div>
     );
   }
@@ -184,4 +235,4 @@ class App extends Component {
 
 
 
-export default App;
+export default withRouter(App);

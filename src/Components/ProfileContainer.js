@@ -16,7 +16,11 @@ export const ProfileContainer = ({ getProfile, profile , profilesFavorites}) => 
                 <div className="feed">
                   <ProfileCard user={profile} getProfile={getProfile} />
                   {profilesFavorites.map((haiku) => (
-                    <HaikuCard key={haiku.id} haiku={haiku} />
+                    <HaikuCard
+                      key={haiku.id}
+                      haiku={haiku}
+                      getProfile={getProfile}
+                    />
                   ))}
                 </div>
               );
@@ -63,7 +67,11 @@ export const ProfileContainer = ({ getProfile, profile , profilesFavorites}) => 
                 <div className="feed">
                   <ProfileCard user={profile} getProfile={getProfile} />
                   {profile.haikus.map((haiku) => (
-                    <HaikuCard key={haiku.id} haiku={haiku} />
+                    <HaikuCard
+                      key={haiku.id}
+                      haiku={haiku}
+                      getProfile={getProfile}
+                    />
                   ))}
                 </div>
               );
