@@ -1,7 +1,8 @@
 
 .main {
   display: grid;
-  grid-template-columns: 0.6fr 1fr 1.8fr 1fr 0.6fr;
+  /* grid-template-columns: 0.6fr 1fr 1.8fr 1fr 0.6fr; */
+  grid-template-columns: 0.5fr 0.8fr 2.4fr 0.8fr 0.5fr;
   grid-template-rows: 0.1fr 2fr;
   gap: 0px 0px;
   grid-template-areas:

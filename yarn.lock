@@ -9159,6 +9159,14 @@ react-layout-effect@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-layout-effect/-/react-layout-effect-1.0.5.tgz#0dc4e24452aee5de66c93c166f0ec512dfb1be80"
   integrity sha512-zdRXHuch+OBHU6bvjTelOGUCM+UDr/iCY+c0wXLEAc+G4/FlcJruD/hUOzlKH5XgO90Y/BUJPNhI/g9kl+VAsA==
 
+react-loader-spinner@^3.1.14:
+  version "3.1.14"
+  resolved "https://registry.yarnpkg.com/react-loader-spinner/-/react-loader-spinner-3.1.14.tgz#2a201f07379c492766175609903c0f2ced57c720"
+  integrity sha512-7V+upnW+RVA/O94LIB/EQLK2uaz/TpZBHG5uNXlOXgvxvALxlxVYeEDmus5Oex2C58fiwrsRvSyu/4VRmLbZ9Q==
+  dependencies:
+    babel-runtime "^6.26.0"
+    prop-types "^15.7.2"
+
 react-refresh@^0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"

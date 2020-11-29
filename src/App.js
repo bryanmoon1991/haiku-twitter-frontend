@@ -7,9 +7,6 @@ import { Login } from './Components/Login';
 import { Home } from './Components/Home';
 import { ProfileContainer } from './Components/ProfileContainer';
 import { Explore } from './Components/Explore';
-import { Favorites } from './Components/Favorites';
-import { Following } from './Components/Following';
-import { Followers } from './Components/Followers';
 import './App.css'
 
 
@@ -54,15 +51,6 @@ class App extends Component {
       fetch('http://localhost:4000/api/v1/users')
         .then(response => response.json())
         .then(data => {
-          // let userArr = []
-          // data.map(user => {
-          //   userArr.push({
-          //     id: user.id,
-          //     username: user.username,
-          //     bio: user.bio,
-          //     image: user.image
-          //   })
-          // })
           this.setState({ userIndex: data })
           console.log(data)
         });
@@ -119,7 +107,6 @@ class App extends Component {
 
 
   getProfile = (id) => {
-    // not sure if this will work
     this.setState({profile: null, profilesFavorites: []})
 
     fetch(`http://localhost:4000/api/v1/users/${id}`)
@@ -167,18 +154,6 @@ class App extends Component {
                 getProfile={this.getProfile}
               />
             )}
-          />
-          <Route
-            path="/favorites"
-            render={() => <Favorites currentUser={this.state.user} />}
-          />
-          <Route
-            path="/following"
-            render={() => <Following currentUser={this.state.user} />}
-          />
-          <Route
-            path="/followers"
-            render={() => <Followers currentUser={this.state.user} />}
           />
         </Switch>
 
