@@ -4,7 +4,7 @@ import HaikuCard from './HaikuCard';
 import { ProfileCard } from './ProfileCard'
 import Loader from 'react-loader-spinner'
 
-export const ProfileContainer = ({ getProfile, profile , profilesFavorites}) => {
+export const ProfileContainer = ({ getProfile, profile , profilesFavorites, currentUser, follow, unfollow}) => {
   return (
     <>
       {profile ? (
@@ -14,12 +14,13 @@ export const ProfileContainer = ({ getProfile, profile , profilesFavorites}) => 
             render={() => {
               return (
                 <div className="feed">
-                  <ProfileCard user={profile} getProfile={getProfile} />
+                  <ProfileCard follow={follow} unfollow={unfollow} currentUser={currentUser} user={profile} getProfile={getProfile} />
                   {profilesFavorites.map((haiku) => (
                     <HaikuCard
                       key={haiku.id}
                       haiku={haiku}
                       getProfile={getProfile}
+                      currentUser={currentUser}
                     />
                   ))}
                 </div>
@@ -31,9 +32,12 @@ export const ProfileContainer = ({ getProfile, profile , profilesFavorites}) => 
             render={() => {
               return (
                 <div className="feed">
-                  <ProfileCard user={profile} getProfile={getProfile} />
+                  <ProfileCard follow={follow} unfollow={unfollow} currentUser={currentUser} user={profile} getProfile={getProfile} />
                   {profile.followees.map((profile) => (
                     <ProfileCard
+                      follow={follow}
+                      unfollow={unfollow}
+                      currentUser={currentUser}
                       key={profile.id}
                       user={profile}
                       getProfile={getProfile}
@@ -48,9 +52,12 @@ export const ProfileContainer = ({ getProfile, profile , profilesFavorites}) => 
             render={() => {
               return (
                 <div className="feed">
-                  <ProfileCard user={profile} getProfile={getProfile} />
+                  <ProfileCard follow={follow} unfollow={unfollow} currentUser={currentUser} user={profile} getProfile={getProfile} />
                   {profile.followers.map((profile) => (
                     <ProfileCard
+                      follow={follow}
+                      unfollow={unfollow}
+                      currentUser={currentUser}
                       key={profile.id}
                       user={profile}
                       getProfile={getProfile}
@@ -65,12 +72,13 @@ export const ProfileContainer = ({ getProfile, profile , profilesFavorites}) => 
             render={() => {
               return (
                 <div className="feed">
-                  <ProfileCard user={profile} getProfile={getProfile} />
+                  <ProfileCard follow={follow} unfollow={unfollow} currentUser={currentUser} user={profile} getProfile={getProfile} />
                   {profile.haikus.map((haiku) => (
                     <HaikuCard
                       key={haiku.id}
                       haiku={haiku}
                       getProfile={getProfile}
+                      currentUser={currentUser}
                     />
                   ))}
                 </div>

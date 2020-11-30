@@ -186,6 +186,76 @@ class App extends Component {
         })
   }
 
+  addFavorite = (haikuID) => {
+    fetch("http://localhost:4000/api/v1/favorites", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json'
+      },
+      body: JSON.stringify({
+        haiku_id: haikuID,
+        user_id: this.state.user.id
+      })
+    }).then(resp => resp.json()).then((data) => {
+      let userCopy = this.state.user
+      userCopy.favorites.push(data)
+      this.setState({user: userCopy})
+    })
+  }
+
+  removeFavorite = (haikuID) => {
+    let fav = this.state.user.favorites.find(favObj => favObj.haiku.id === haikuID)
+    fetch(`http://localhost:4000/api/v1/favorites/${fav.id}`, {
+      method: 'DELETE'
+    }).then(resp => resp.json()).then((data) => {
+      let userCopy = this.state.user 
+      let deletedFav = userCopy.favorites.indexOf(fav)
+      userCopy.favorites.splice(deletedFav, 1)
+      this.setState({user: userCopy})
+    })
+  }
+
+  follow = (userID) => {
+  
+      fetch("http://localhost:4000/api/v1/relationships", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accepts': 'application/json'
+        },
+        body: JSON.stringify({
+          follower_id: this.state.user.id,
+          followee_id: userID
+        })
+      }).then(resp => resp.json()).then((data) => {
+        // let userCopy = this.state.user
+        // let newFollowee = this.state.userIndex.find(userObj => userObj.id === userID)
+        // userCopy.followees.push(newFollowee)
+        // userCopy.followed_users.push(data)
+        // this.setState({user: userCopy})
+        this.getProfile(userID)
+        this.props.history.push(`/users/${userID}`)
+      })
+  }
+
+
+  unfollow = (userID) => {
+    let relationship = this.state.user.followed_users.find(rel => rel.followee_id === userID)
+    fetch(`http://localhost:4000/api/v1/relationships/${relationship.id}`, {
+      method: 'DELETE'
+    }).then(resp => resp.json()).then(() => {
+      // let userCopy = this.state.user 
+      // let unfollowed = userCopy.followees.find(userObj => userObj.id === userID)
+      // let index = userCopy.followees.indexOf(unfollowed)
+      // userCopy.followees.splice(index, 1)
+      // this.setState({user: userCopy})
+      this.getProfile(this.state.user.id)
+      this.props.history.push(`/users/${this.state.user.id}`)
+    })
+  }
+
+
   render() {
     return (
       <div className="main">
@@ -202,6 +272,8 @@ class App extends Component {
               currentUser={this.state.user}
               userIndex={this.state.userIndex}
               getProfile={this.getProfile}
+              follow={this.follow}
+              unfollow={this.unfollow}
             />
           )}
         />
@@ -214,6 +286,8 @@ class App extends Component {
                 currentUser={this.state.user}
                 feed={this.state.feed}
                 getProfile={this.getProfile}
+                addFavorite={this.addFavorite}
+                removeFavorite={this.removeFavorite}
               />
             )}
           />
@@ -225,6 +299,9 @@ class App extends Component {
                 profile={this.state.profile}
                 profilesFavorites={this.state.profilesFavorites}
                 getProfile={this.getProfile}
+                currentUser={this.state.user}
+                follow={this.follow}
+                unfollow={this.unfollow}
               />
             )}
           />
