@@ -11,21 +11,25 @@ export const ProfileCard = ({user, getProfile, unfollow, follow, currentUser}) =
   }
 
   const followedState = () => {
-    let found = currentUser.followees.find(userObj => userObj.id === user.id)
-    if (found) {
-        return true
-    } else {
-        return false
+    if (currentUser){
+      let found = currentUser.followees.find(userObj => userObj.id === user.id)
+      if (found) {
+          return true
+      } else {
+          return false
+      }
+    }else{
+      return false
     }
   }
   let [followed, setFollowed] = useState(followedState)
-
+  
     return (
-      <div className="profile-card">
+        <div className="profile-card">
         <img src={user.image} alt="avatar" />
         <div className="info">
           <h3 className="name">{user.name}</h3>
-          {currentUser.id === user.id ? null : <button onClick={handleFollowButton}>{followed ? "Unfollow" : "Follow"}</button>}
+          {currentUser ? (currentUser.id === user.id ? null : <button onClick={handleFollowButton}> {followed ? "Unfollow" : "Follow"} </button>) : null  }
           
           <Link to={`/users/${user.id}`} onClick={() => getProfile(user.id)}>
             <p className="username">@{user.username}</p>
@@ -37,13 +41,13 @@ export const ProfileCard = ({user, getProfile, unfollow, follow, currentUser}) =
               to={`/users/${user.id}/followers`}
               onClick={() => getProfile(user.id)}
             >
-              Followers
+              Followers: {user.followers.length}
             </Link>
             <Link
               to={`/users/${user.id}/following`}
               onClick={() => getProfile(user.id)}
             >
-              Following
+              Following: {user.followees.length}
             </Link>
             <Link
               to={`/users/${user.id}/favorites`}
@@ -53,5 +57,8 @@ export const ProfileCard = ({user, getProfile, unfollow, follow, currentUser}) =
             </Link>
           </div>
       </div>
-    );
+  
+      
+    )
+
 }
