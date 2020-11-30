@@ -3,15 +3,25 @@ import './HaikuCard.css'
 import { Link } from 'react-router-dom'
 const HaikuCard = ({ haiku, getProfile }) => {
 
-    return(
-        <div className='haiku-card'>
-            {/* <img src={haiku.user.image} alt='profile Pic'/> */}
-            <Link to={`/users/${haiku.user.id}`} onClick={() => getProfile(haiku.user.id) }><h4>{haiku.user.username}</h4></Link>
-            <p>{haiku.first}</p>
-            <p>{haiku.second}</p>
-            <p>{haiku.third}</p>
+    return (
+      <div className="haiku-card">
+        <img src={haiku.user.image} alt="profile Pic" />
+        <div className="info">
+        <h3>{haiku.user.name}</h3> 
+        <Link
+          to={`/users/${haiku.user.id}`}
+          onClick={() => getProfile(haiku.user.id)}
+        >
+          @{haiku.user.username}
+        </Link>
         </div>
-    )
+        <div className="haiku">
+          <p className="first">{haiku.first}</p>
+          <p className="second">{haiku.second}</p>
+          <p className="third">{haiku.third}</p>
+        </div>
+      </div>
+    );
 }
 
 

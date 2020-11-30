@@ -1,7 +1,52 @@
 .haiku-card {
-    border: 2px solid black;
+    display: grid;
+    grid-template-columns: 0.3fr 2fr;
+    padding: 10px;
+    border: 1px solid rgba(136,153,166, 0.2);
+    background-color: #15202b;
 }
 
-.haiku-card p {
-    text-align: center;
+.info {
+    justify-self: start;
+    align-self: center;
+    margin: 0%;
+
+}
+
+.haiku-card a {
+    text-decoration: none;
+    color: #8899a6;
+
+}
+
+.haiku-card a:hover {
+    text-decoration: underline;
+}
+
+
+
+.haiku {
+    grid-column: 2/3;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.haiku p {
+    margin: 0% 20%;
+}
+
+.first {
+    justify-self: start;
+}
+
+.second {
+    justify-self: center;
+}
+
+.third {
+    justify-self: end;
+}
+
+.haiku-card:hover {
+    background-color: #192734; 
 }

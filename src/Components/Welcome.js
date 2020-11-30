@@ -9,7 +9,7 @@ export const Welcome = ({toggleSignup, toggleLogin, toggleEditProfile, currentUs
             {currentUser ? 
                 (
                     <div className="welcome">
-                        <h2>Welcome {currentUser.username}</h2>
+                        <h3>Welcome {currentUser.username}</h3>
                         <a onClick={handleLogout}>Logout</a>
                         <a onClick={toggleEditProfile}>Edit Profile</a>
                     </div>

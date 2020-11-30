@@ -1,19 +1,25 @@
 .welcome {
-    grid-area: sub;
-    background-color: #1a83ff;
-    height: 100vh;
+  grid-area: sub;
+  background-color: #15202b;
+  height: 100vh;
 
 }
 
 .welcome a {
-  background-color: #1a83ff; /* Grey background color */
-  color: black; /* Black text color */
+  background-color: #15202b;
   display: block; /* Make the links appear below each other */
   padding: 25px; /* Add some padding */
   text-decoration: none; /* Remove underline from links */
-  font-size: x-large;
+  font-size: large;
+}
+
+.welcome h3 {
+  display: block; /* Make the links appear below each other */
+  padding: 25px; /* Add some padding */
+  text-decoration: none; /* Remove underline from links */
+  font-size: large;
 }
 
 .welcome a:hover {
-  background-color: #5ba4f8; 
+  background-color: #192734; 
 }

@@ -39,10 +39,11 @@ export const EditProfile = (props) => {
   const initialState = {
     username: props.currentUser.username,
     bio: props.currentUser.bio,
-    image: props.currentUser.image
+    image: props.currentUser.image,
+    name: props.currentUser.name
   };
 
-  let [{ username, bio, image }, setState] = useState(initialState);
+  let [{ username, bio, image, name }, setState] = useState(initialState);
 
 //   const clearState = () => setState({ ...initialState });
 
@@ -57,6 +58,7 @@ export const EditProfile = (props) => {
       username: username,
       bio: bio,
       image: image,
+      name: name
     };
     props.editProfile(user);
     props.toggleEditProfile();
@@ -93,6 +95,13 @@ export const EditProfile = (props) => {
                     type="text"
                     name="username"
                     value={username}
+                    onChange={handleChange}
+                  />
+                  <input
+                    placeholder="full name"
+                    type="text"
+                    name="name"
+                    value={name}
                     onChange={handleChange}
                   />
                   <input

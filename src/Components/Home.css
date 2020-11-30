@@ -1,6 +1,5 @@
 .feed {
     grid-area: feed;
-    border: 2px solid #ccc;
     height: 100vh;
     overflow: scroll;
     justify-content: center;
