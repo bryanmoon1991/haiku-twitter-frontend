@@ -1,6 +1,8 @@
 .haiku-card {
     display: grid;
-    grid-template-columns: 0.3fr 2fr;
+    /* grid-template-columns: 0.3fr 1fr 1fr; */
+    /* grid-auto-rows: minmax(1px, auto); */
+    grid-auto-flow: column;
     padding: 10px;
     border: 1px solid rgba(136,153,166, 0.2);
     background-color: #15202b;
@@ -26,17 +28,17 @@
 
 
 .haiku {
-    grid-column: 2/3;
+    grid-column: 3;
     display: grid;
     grid-template-columns: 1fr;
 }
 
 .haiku p {
-    margin: 0% 20%;
+    margin: 0% 0%;
 }
 
 .first {
-    justify-self: start;
+    justify-self: center;
 }
 
 .second {
@@ -44,7 +46,7 @@
 }
 
 .third {
-    justify-self: end;
+    justify-self: center;
 }
 
 .haiku-card:hover {
