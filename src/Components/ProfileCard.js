@@ -5,6 +5,7 @@ import './ProfileCard.css'
 export const ProfileCard = ({user, getProfile, unfollow, follow, currentUser}) => {
   
   
+
   const handleFollowButton = () => {
     setFollowed(!followed)
     followed ? unfollow(user.id) : follow(user.id)
@@ -41,13 +42,14 @@ export const ProfileCard = ({user, getProfile, unfollow, follow, currentUser}) =
               to={`/users/${user.id}/followers`}
               onClick={() => getProfile(user.id)}
             >
-              Followers: {user.followers.length}
+              {user.followers ? `Followers: ${user.followers.length}` : "Followers"}
+              
             </Link>
             <Link
               to={`/users/${user.id}/following`}
               onClick={() => getProfile(user.id)}
             >
-              Following: {user.followees.length}
+              {user.followees ? `Following: ${user.followees.length}` : "Following"}
             </Link>
             <Link
               to={`/users/${user.id}/favorites`}

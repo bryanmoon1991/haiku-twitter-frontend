@@ -1,10 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Switch, Route } from 'react-router-dom';
 import HaikuCard from './HaikuCard';
 import { ProfileCard } from './ProfileCard'
 import Loader from 'react-loader-spinner'
 
 export const ProfileContainer = ({ getProfile, profile , profilesFavorites, currentUser, follow, unfollow}) => {
+
+
+
   return (
     <>
       {profile ? (
@@ -53,13 +56,13 @@ export const ProfileContainer = ({ getProfile, profile , profilesFavorites, curr
               return (
                 <div className="feed">
                   <ProfileCard follow={follow} unfollow={unfollow} currentUser={currentUser} user={profile} getProfile={getProfile} />
-                  {profile.followers.map((profile) => (
+                  {profile.followers.map((profileObj) => (
                     <ProfileCard
                       follow={follow}
                       unfollow={unfollow}
                       currentUser={currentUser}
-                      key={profile.id}
-                      user={profile}
+                      key={profileObj.id}
+                      user={profileObj}
                       getProfile={getProfile}
                     />
                   ))}
