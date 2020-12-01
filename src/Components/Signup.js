@@ -45,12 +45,13 @@ const FormContainer = styled.form `
 export const Signup = (props) => {
 
     const initialState = {
+        name: '',
         username: '',
         email: '',
         password: '',
     };
 
-    let [{ username, email, password }, setState] = useState(initialState)
+    let [{ name, username, email, password }, setState] = useState(initialState)
   
     const clearState = () => setState({ ...initialState });
 
@@ -62,11 +63,12 @@ export const Signup = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         let user = {
-        username: username,
-        email: email,
-        password: password,
-        bio: "",
-        image: "",
+          name: name,
+          username: username,
+          email: email,
+          password: password,
+          bio: '',
+          image: 'https://aem.dropbox.com/cms/content/dam/dropbox/blog/authors/avatars/defaultAvatar.png',
         };
         
         props.handleSignup(user);
@@ -111,40 +113,45 @@ export const Signup = (props) => {
           <Background onClick={closeModal} ref={modalRef}>
             <animated.div style={animation}>
               <ModalWrapper showSignup={props.showSignup}>
-        
-
-                  <h1>Sign Up</h1>
-                  <FormContainer  onSubmit={handleSubmit}>
-                    <input
-                      placeholder="username"
-                      type="text"
-                      name="username"
-                      value={username}
-                      onChange={handleChange}
-                    />
-                    <input
-                      placeholder="email"
-                      type="text"
-                      name="email"
-                      value={email}
-                      onChange={handleChange}
-                    />
-                    <input
-                      placeholder="password"
-                      type="password"
-                      name="password"
-                      value={password}
-                      onChange={handleChange}
-                    />
-                    <button placeholder="submit" type="submit">
-                      Sign Up
-                    </button>
-                  </FormContainer>
-                  <div>
-                    {
-                      // state.errors ? handleErrors() : null
-                    }
-                  </div>
+                <h1>Sign Up</h1>
+                <FormContainer onSubmit={handleSubmit}>
+                  <input
+                    placeholder="full name"
+                    type="text"
+                    name="name"
+                    value={name}
+                    onChange={handleChange}
+                  />
+                  <input
+                    placeholder="username"
+                    type="text"
+                    name="username"
+                    value={username}
+                    onChange={handleChange}
+                  />
+                  <input
+                    placeholder="email"
+                    type="text"
+                    name="email"
+                    value={email}
+                    onChange={handleChange}
+                  />
+                  <input
+                    placeholder="password"
+                    type="password"
+                    name="password"
+                    value={password}
+                    onChange={handleChange}
+                  />
+                  <button placeholder="submit" type="submit">
+                    Sign Up
+                  </button>
+                </FormContainer>
+                <div>
+                  {
+                    // state.errors ? handleErrors() : null
+                  }
+                </div>
                 <CloseModalButton
                   aria-label="Close modal"
                   onClick={() => props.toggleSignup()}

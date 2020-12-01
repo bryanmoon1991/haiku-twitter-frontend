@@ -18,8 +18,7 @@ export const Explore = ({currentUser, userIndex, getProfile, follow, unfollow })
       console.log("loading")
     } else {
       return userIndex.filter(userObj => {
-        return userObj.username.toLowerCase().includes(query.toLowerCase()) 
-        // || userObj.name.toLowerCase().includes(query.toLowerCase())
+        return userObj.username.toLowerCase().includes(query.toLowerCase()) || userObj.name.toLowerCase().includes(query.toLowerCase())
       });
     }
   }
