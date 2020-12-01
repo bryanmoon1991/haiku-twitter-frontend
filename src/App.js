@@ -240,7 +240,6 @@ class App extends Component {
       })
   }
 
-
   unfollow = (userID) => {
     let relationship = this.state.user.followed_users.find(rel => rel.followee_id === userID)
     fetch(`http://localhost:4000/api/v1/relationships/${relationship.id}`, {
