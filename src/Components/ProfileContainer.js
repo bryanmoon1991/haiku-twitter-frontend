@@ -4,7 +4,7 @@ import HaikuCard from './HaikuCard';
 import { ProfileCard } from './ProfileCard'
 import Loader from 'react-loader-spinner'
 
-export const ProfileContainer = ({ getProfile, profile , profilesFavorites, currentUser, follow, unfollow, addFavorite, removeFavorite}) => {
+export const ProfileContainer = ({ getProfile, profile , profilesFavorites, currentUser, follow, unfollow, addFavorite, removeFavorite, handleDeleteHaiku}) => {
 
 
 
@@ -24,14 +24,15 @@ export const ProfileContainer = ({ getProfile, profile , profilesFavorites, curr
                     user={profile}
                     getProfile={getProfile}
                   />
-                  {profilesFavorites.map((haiku) => (
+                  {profilesFavorites.sort((a,b) => a.created_at > b.created_at ? -1 : (a.created_at === b.created_at ? 0 : 1)).map((haikuObj) => (
                     <HaikuCard
-                      key={haiku.id}
-                      haiku={haiku}
+                      key={haikuObj.haiku.id}
+                      haiku={haikuObj.haiku}
                       getProfile={getProfile}
                       currentUser={currentUser}
                       addFavorite={addFavorite}
                       removeFavorite={removeFavorite}
+                      handleDeleteHaiku={handleDeleteHaiku}
                     />
                   ))}
                 </div>
@@ -103,7 +104,7 @@ export const ProfileContainer = ({ getProfile, profile , profilesFavorites, curr
                     user={profile}
                     getProfile={getProfile}
                   />
-                  {profile.haikus.map((haiku) => (
+                  {profile.haikus.sort((a,b) => a.created_at > b.created_at ? -1 : (a.created_at === b.created_at ? 0 : 1)).map((haiku) => (
                     <HaikuCard
                       key={haiku.id}
                       haiku={haiku}
@@ -111,6 +112,7 @@ export const ProfileContainer = ({ getProfile, profile , profilesFavorites, curr
                       currentUser={currentUser}
                       addFavorite={addFavorite}
                       removeFavorite={removeFavorite}
+                      handleDeleteHaiku={handleDeleteHaiku}
                     />
                   ))}
                 </div>

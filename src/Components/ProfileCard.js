@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import * as RiIcons from 'react-icons/ri'
 import './ProfileCard.css'
 
-export const ProfileCard = ({user, getProfile, unfollow, follow, currentUser, addFavorite, removeFavorite}) => {
+export const ProfileCard = ({user, getProfile, unfollow, follow, currentUser}) => {
   
   
 

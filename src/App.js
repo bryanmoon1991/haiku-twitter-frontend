@@ -23,6 +23,7 @@ class App extends Component {
     showSignup: false,
     showCompose: false,
     showEditProfile: false,
+    favoriteInstances: [],
   };
 
   toggleLogin = () => {
@@ -94,10 +95,14 @@ class App extends Component {
     })
       .then((r) => r.json())
       .then((data) => {
-        this.setState({ user: data.user });
-        localStorage.setItem('token', data.jwt);
-        this.props.history.push('/explore');
-      });
+        if (data.error){
+          alert(data.error)
+        }else{
+          this.setState({ user: data.user });
+          localStorage.setItem('token', data.jwt);
+          this.props.history.push('/explore');
+        }
+      })
   };
 
   handleLogin = (userInfo) => {
@@ -111,14 +116,24 @@ class App extends Component {
     })
       .then((r) => r.json())
       .then((data) => {
-        this.setState({
-          user: data.user,
-          feed: data.feed,
-          userIndex: data.unfollowedUsers,
-        });
-        console.log(this.state);
-        localStorage.setItem('token', data.jwt);
-        this.props.history.push('/home');
+        if (data.message){
+          alert(data.message)
+          this.setState({
+            feed: data.feed,
+            userIndex: data.userIndex,
+          });
+         
+        }else{
+
+          this.setState({
+            user: data.user,
+            feed: data.feed,
+            userIndex: data.unfollowedUsers,
+          });
+         
+          localStorage.setItem('token', data.jwt);
+          this.props.history.push('/home');
+        }
       });
   };
 
@@ -139,6 +154,7 @@ class App extends Component {
       .then((r) => r.json())
       .then((data) => {
         console.log(data);
+        this.getProfile(this.state.user.id)
         this.props.history.push(`/users/${this.state.user.id}`);
       });
   };
@@ -160,12 +176,11 @@ class App extends Component {
         console.log('in get profile:', data);
         this.setState({
           profile: data.user,
-          profilesFavorites: data.favorites,
+          profilesFavorites: data.favorites
         });
       });
   };
 
-  //test
   editProfile = (user) => {
     const token = localStorage.getItem('token');
     fetch(`http://localhost:4000/api/v1/users/${this.state.user.id}`,{
@@ -185,6 +200,20 @@ class App extends Component {
           this.props.history.push(`/users/${user.id}`)
 
         })
+  }
+
+  handleDeleteHaiku = (haiku) => {
+    fetch(`http://localhost:4000/api/v1/haikus/${haiku.id}`,{
+      method: 'DELETE'
+    }).then(resp => resp.json()).then(() => {
+      const userCopy = this.state.user
+      const index = userCopy.haikus.indexOf(haiku)
+      userCopy.haikus.splice(index, 1)
+      this.setState({user: userCopy}, () => {
+        this.getProfile(this.state.user.id)
+        this.props.history.push(`/users/${this.state.user.id}`)
+      })
+    })
   }
 
   addFavorite = (haikuID) => {
@@ -329,6 +358,7 @@ class App extends Component {
                 unfollow={this.unfollow}
                 addFavorite={this.addFavorite}
                 removeFavorite={this.removeFavorite}
+                handleDeleteHaiku={this.handleDeleteHaiku}
               />
             )}
           />

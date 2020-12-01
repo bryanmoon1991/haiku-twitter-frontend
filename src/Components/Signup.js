@@ -23,6 +23,7 @@ const ModalWrapper = styled.div`
   position: relative;
   z-index: 10;
   border-radius: 10px;
+  
 `;
 
 const CloseModalButton = styled(MdClose)`
@@ -36,7 +37,10 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
-
+const FormContainer = styled.form `
+  display: grid;
+  grid-template-columns: 1fr;
+`
 
 export const Signup = (props) => {
 
@@ -107,9 +111,10 @@ export const Signup = (props) => {
           <Background onClick={closeModal} ref={modalRef}>
             <animated.div style={animation}>
               <ModalWrapper showSignup={props.showSignup}>
-                <div>
+        
+
                   <h1>Sign Up</h1>
-                  <form onSubmit={handleSubmit}>
+                  <FormContainer  onSubmit={handleSubmit}>
                     <input
                       placeholder="username"
                       type="text"
@@ -134,13 +139,12 @@ export const Signup = (props) => {
                     <button placeholder="submit" type="submit">
                       Sign Up
                     </button>
-                  </form>
+                  </FormContainer>
                   <div>
                     {
                       // state.errors ? handleErrors() : null
                     }
                   </div>
-                </div>
                 <CloseModalButton
                   aria-label="Close modal"
                   onClick={() => props.toggleSignup()}

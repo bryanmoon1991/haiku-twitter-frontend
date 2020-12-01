@@ -8,11 +8,16 @@
   grid-template-areas:
     ". . search . ."
     ". nav feed sub .";
+  color: white;
+  font-family: "Times New Roman", Times, sans-serif;
 }
 
 .feed { grid-area: feed; }
 
-.nav { grid-area: nav; }
+.nav { 
+  grid-area: nav;
+
+ }
 
 .sub { grid-area: sub; }
 
@@ -23,8 +28,9 @@ img {
   width: 50px;
   height: 50px;
 }
-* {
-  color: #ffffff;
-  font-family: "Times New Roman", Times, sans-serif;
+
+
+.form {
+  color: black
 }
 
