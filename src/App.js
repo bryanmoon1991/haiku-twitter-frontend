@@ -165,6 +165,7 @@ class App extends Component {
       });
   };
 
+  //test
   editProfile = (user) => {
     const token = localStorage.getItem('token');
     fetch(`http://localhost:4000/api/v1/users/${this.state.user.id}`,{
