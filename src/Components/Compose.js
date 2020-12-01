@@ -59,9 +59,23 @@ export const Compose = (props) => {
        second: second,
        third: third,
      };
-     props.createHaiku(haiku);
-     props.toggleCompose();
-     clearState();
+     const syllable = require('syllable')
+
+     let errors = []
+     if (syllable(first) !== 5){
+       errors.push('First line must contain 5 syllables')
+     }else if (syllable(second) !== 7){
+      errors.push('Second line must contain 7 syllables')
+     }else if (syllable(third) !== 5){
+      errors.push('Third line must contain 5 syllables')
+     }
+     if (errors.length > 0){
+       alert(errors)
+     }else{
+       props.createHaiku(haiku);
+       props.toggleCompose();
+       clearState();
+     }
    };
 
    const modalRef = useRef();

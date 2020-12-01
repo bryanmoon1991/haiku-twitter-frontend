@@ -79,7 +79,7 @@
     content:"Unfollow";
 }
 
-button {
+.profile-card button {
     font-size: 1.2em;
     padding: 2px 15px;
     border-radius: 15px;

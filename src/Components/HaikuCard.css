@@ -56,3 +56,9 @@
 .haiku-card:hover {
     background-color: #192734; 
 }
+
+button{
+    margin: 0;
+    padding: 0;
+    
+}

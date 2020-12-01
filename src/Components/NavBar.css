@@ -2,6 +2,7 @@
   grid-area: nav;
   background-color: #15202b;
   height: 100vh;
+
 }
 
 .navbar span {
@@ -15,7 +16,7 @@
 
 .navbar a {
   /* background-color: #1a83ff; Grey background color */
-  color: black; /* Black text color */
+  color: rgb(255, 255, 255); /* Black text color */
   text-decoration: none; /* Remove underline from links */
   display: flex; /* Make the links appear below each other */
   align-items: center;
