@@ -44,6 +44,46 @@
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+.follow-button {
+    color: #1da1f2;
+    border: 1px solid #1da1f2;
+    background-color: #192734;
+}
+
+.follow-icon {
+    fill: #1da1f2
+}
+
+.following-button {
+    background-color: #1da1f2;
+    border: none;
+}
+
+.follow-button:hover{
+    background-color: rgba(29, 161, 242, 0.1);
+}
+
+.following-icon {
+    fill: white;
+}
+
+.following-button:hover {
+    background-color: red;
+}
+
+.following-button:hover span{
+    display: none;
+}
+
+.following-button:hover:before{
+    content:"Unfollow";
+}
+
+button {
+    font-size: 1.2em;
+    padding: 2px 15px;
+    border-radius: 15px;
+}
 
 
 

@@ -49,6 +49,10 @@
     justify-self: center;
 }
 
+.icon {
+    fill: red;
+}
+
 .haiku-card:hover {
     background-color: #192734; 
 }

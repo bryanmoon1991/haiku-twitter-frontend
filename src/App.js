@@ -229,13 +229,13 @@ class App extends Component {
           followee_id: userID
         })
       }).then(resp => resp.json()).then((data) => {
-        // let userCopy = this.state.user
-        // let newFollowee = this.state.userIndex.find(userObj => userObj.id === userID)
-        // userCopy.followees.push(newFollowee)
-        // userCopy.followed_users.push(data)
-        // this.setState({user: userCopy})
-        this.getProfile(userID)
-        this.props.history.push(`/users/${userID}`)
+        let userCopy = this.state.user
+        let newFollowee = this.state.userIndex.find(userObj => userObj.id === userID)
+        userCopy.followees.push(newFollowee)
+        userCopy.followed_users.push(data)
+        this.setState({user: userCopy}, () => {
+          console.log("follow:", this.state.user.followed_users, this.state.user.followees)
+        })
       })
   }
 
@@ -244,14 +244,39 @@ class App extends Component {
     let relationship = this.state.user.followed_users.find(rel => rel.followee_id === userID)
     fetch(`http://localhost:4000/api/v1/relationships/${relationship.id}`, {
       method: 'DELETE'
-    }).then(resp => resp.json()).then(() => {
-      // let userCopy = this.state.user 
-      // let unfollowed = userCopy.followees.find(userObj => userObj.id === userID)
-      // let index = userCopy.followees.indexOf(unfollowed)
-      // userCopy.followees.splice(index, 1)
-      // this.setState({user: userCopy})
-      this.getProfile(this.state.user.id)
-      this.props.history.push(`/users/${this.state.user.id}`)
+    }).then(resp => resp.json()).then((data) => {
+      let userCopy = this.state.user 
+      let indexOfRelationship = userCopy.followed_users.indexOf(relationship)
+      userCopy.followed_users.splice(indexOfRelationship, 1)
+      let unfollowedUser = userCopy.followees.find(userObj => userObj.id === userID)
+      let indexOfUser = userCopy.followees.indexOf(unfollowedUser)
+      userCopy.followees.splice(indexOfUser, 1)
+
+      if (this.state.userIndex.includes(unfollowedUser)) {
+        console.log("already in index of non-followed") 
+        
+        this.setState({user: userCopy}, () => {
+          console.log(
+            'unfollow:',
+            this.state.user.followed_users,
+            this.state.user.followees,
+            data
+          );
+        })
+  
+      } else {
+        this.setState({
+          user: userCopy,
+          userIndex:[...this.state.userIndex, unfollowedUser]
+        }, () => {
+          console.log(
+            'unfollow:',
+            this.state.user.followed_users,
+            this.state.user.followees,
+            data
+          );
+        })
+      } 
     })
   }
 
@@ -302,6 +327,8 @@ class App extends Component {
                 currentUser={this.state.user}
                 follow={this.follow}
                 unfollow={this.unfollow}
+                addFavorite={this.addFavorite}
+                removeFavorite={this.removeFavorite}
               />
             )}
           />
