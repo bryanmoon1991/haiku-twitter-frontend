@@ -1,7 +1,7 @@
 .feed {
     grid-area: feed;
     height: 100vh;
-    overflow: scroll;
+    overflow: auto;
     justify-content: center;
     display: table-column;
     position: relative;

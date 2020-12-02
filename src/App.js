@@ -6,7 +6,7 @@ import { Signup } from './Components/Signup';
 import { Login } from './Components/Login';
 import { Compose } from './Components/Compose';
 import { EditProfile } from './Components/EditProfile';
-import { Home } from './Components/Home';
+import Home from './Components/Home';
 import { ProfileContainer } from './Components/ProfileContainer';
 import { Explore } from './Components/Explore';
 import './App.css'
@@ -310,6 +310,21 @@ class App extends Component {
   }
 
 
+  feedSort = () => {
+    // if (this.state.userIndex.length > 0) {
+
+      return this.state.feed.sort((a,b) => {
+        if (a.created_at > b.created_at) return -1;
+        if (a.created_at < b.created_at) return 1;
+        return 0;
+      })
+
+    // } else {
+      // return [];
+    // }
+  }
+
+
   render() {
     return (
       <div className="main">
@@ -338,7 +353,7 @@ class App extends Component {
             render={() => (
               <Home
                 currentUser={this.state.user}
-                feed={this.state.feed}
+                feed={this.feedSort()}
                 getProfile={this.getProfile}
                 addFavorite={this.addFavorite}
                 removeFavorite={this.removeFavorite}
