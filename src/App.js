@@ -313,6 +313,9 @@ class App extends Component {
   render() {
     return (
       <div className="main">
+        <div className="logo">
+          <h1>Haiku Twitter</h1>
+        </div>
         <NavBar
           currentUser={this.state.user}
           getProfile={this.getProfile}
