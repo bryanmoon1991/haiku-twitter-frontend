@@ -14,10 +14,11 @@
 
 .feed { grid-area: feed; }
 
+
 .nav { 
   grid-area: nav;
-
- }
+  justify-items: end;
+}
 
 .sub { grid-area: sub; }
 
