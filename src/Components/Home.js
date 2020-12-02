@@ -6,18 +6,6 @@ import './Home.css'
 
 class Home extends Component {
 
-  // constructor(props) {
-  //   super(props);
-  //   if(props.feed.length > 0) {
-  //     this.state = {
-  //       loaded: [...this.props.feed.slice(0, 9)],
-  //       unloaded: [...this.props.feed.slice(10)],
-  //       hasMore: true
-  //     };
-  //   }
-  // }   
-  
-  
   state = {
     loaded: [...this.props.feed.slice(0, 9)],
     unloaded: [...this.props.feed.slice(10)],
