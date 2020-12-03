@@ -63,7 +63,7 @@ const HaikuCard = ({ haiku, getProfile, currentUser, addFavorite, removeFavorite
         </div>
         
         {currentUser ? (
-          <>
+          <span className="user-icons">
           {currentUser.id === haiku.user.id ? <IoTrashOutline className="icon" onClick={() => handleDeleteHaiku(haiku)}/> : null}
           {favorite ? (
             
@@ -72,7 +72,7 @@ const HaikuCard = ({ haiku, getProfile, currentUser, addFavorite, removeFavorite
           ) : (
             <RiIcons.RiHeart3Line className="icon" onClick={handleFavorite} />
           )}
-          </>
+          </span>
         )
          : 
          null

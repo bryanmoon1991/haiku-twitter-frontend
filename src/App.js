@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Redirect, withRouter } from 'react-router-dom';
 import { NavBar } from './Components/NavBar'
 import { Welcome } from './Components/Welcome'
 import { Signup } from './Components/Signup';
@@ -10,6 +10,7 @@ import Home from './Components/Home';
 import { ProfileContainer } from './Components/ProfileContainer';
 import { Explore } from './Components/Explore';
 import { FaHSquare } from "react-icons/fa";
+import Loader from 'react-loader-spinner';
 import { CgTwitter } from "react-icons/cg";
 import './App.css'
 
@@ -340,7 +341,7 @@ class App extends Component {
   render() {
     return (
       <div className="main">
-        <span className='logo'>
+        <span className="logo">
           <FaHSquare className="logo-icons" />
           <CgTwitter className="logo-icons" />
         </span>
@@ -348,6 +349,26 @@ class App extends Component {
           currentUser={this.state.user}
           getProfile={this.getProfile}
           toggleCompose={this.toggleCompose}
+        />
+
+        <Route
+          exact
+          path="/"
+          render={() =>
+            this.state.feed.length === 0 ? (
+              <div className="feed">
+                <h2>Loading</h2>
+                <Loader
+                  type="TailSpin"
+                  color="#00BFFF"
+                  height={50}
+                  width={50}
+                />
+              </div>
+            ) : (
+              <Redirect to="/home" />
+            )
+          }
         />
 
         <Route
@@ -363,37 +384,35 @@ class App extends Component {
           )}
         />
 
-      
-          <Route
-            path="/home"
-            render={() => (
-              <Home
-                currentUser={this.state.user}
-                feed={this.feedSort()}
-                getProfile={this.getProfile}
-                addFavorite={this.addFavorite}
-                removeFavorite={this.removeFavorite}
-              />
-            )}
-          />
-          <Route
-            path="/users"
-            render={() => (
-              <ProfileContainer
-                userIndex={this.state.userIndex}
-                profile={this.state.profile}
-                profilesFavorites={this.state.profilesFavorites}
-                getProfile={this.getProfile}
-                currentUser={this.state.user}
-                follow={this.follow}
-                unfollow={this.unfollow}
-                addFavorite={this.addFavorite}
-                removeFavorite={this.removeFavorite}
-                handleDeleteHaiku={this.handleDeleteHaiku}
-              />
-            )}
-          />
-        
+        <Route
+          path="/home"
+          render={() => (
+            <Home
+              currentUser={this.state.user}
+              feed={this.feedSort()}
+              getProfile={this.getProfile}
+              addFavorite={this.addFavorite}
+              removeFavorite={this.removeFavorite}
+            />
+          )}
+        />
+        <Route
+          path="/users"
+          render={() => (
+            <ProfileContainer
+              userIndex={this.state.userIndex}
+              profile={this.state.profile}
+              profilesFavorites={this.state.profilesFavorites}
+              getProfile={this.getProfile}
+              currentUser={this.state.user}
+              follow={this.follow}
+              unfollow={this.unfollow}
+              addFavorite={this.addFavorite}
+              removeFavorite={this.removeFavorite}
+              handleDeleteHaiku={this.handleDeleteHaiku}
+            />
+          )}
+        />
 
         <Welcome
           currentUser={this.state.user}
@@ -419,15 +438,14 @@ class App extends Component {
           showCompose={this.state.showCompose}
           createHaiku={this.createHaiku}
         />
-        {this.state.user ?
-        <EditProfile
-          toggleEditProfile={this.toggleEditProfile}
-          showEditProfile={this.state.showEditProfile}
-          editProfile={this.editProfile}
-          currentUser={this.state.user}
-        /> :
-        null
-        }
+        {this.state.user ? (
+          <EditProfile
+            toggleEditProfile={this.toggleEditProfile}
+            showEditProfile={this.state.showEditProfile}
+            editProfile={this.editProfile}
+            currentUser={this.state.user}
+          />
+        ) : null}
       </div>
     );
   }

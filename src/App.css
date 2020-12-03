@@ -6,14 +6,14 @@ html {
 .main {
   display: grid;
   /* grid-template-columns: 0.6fr 1fr 1.8fr 1fr 0.6fr; */
-  grid-template-columns: 0.5fr 0.8fr 2.4fr 0.8fr 0.5fr;
-  grid-template-rows: 0.1fr 2fr;
+  grid-template-columns: 0.3fr 0.5fr 1.4fr 0.5fr 0.3fr;
+  grid-template-rows: 0.2fr 2fr;
   gap: 0px 0px;
   grid-template-areas:
     ". logo search . ."
     ". nav feed sub .";
   color: white;
-  font-family: "Times New Roman", Times, sans-serif;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #15202b
 }
 

@@ -43,7 +43,7 @@ a{
 
 .bio {
     margin: 0%;
-
+    
 }
 
 .nav-links {
@@ -51,7 +51,13 @@ a{
     grid-column: 1/4;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin-top: 5px;
+    margin-top: 15px;
+}
+
+.profile-card button {
+    font-size: 1em;
+    padding: 2px 15px;
+    border-radius: 15px;
 }
 
 .follow-button {
@@ -92,11 +98,6 @@ a{
     content:"Unfollow";
 }
 
-.profile-card button {
-    font-size: 1em;
-    padding: 2px 15px;
-    border-radius: 15px;
-}
 
 
 

@@ -48,46 +48,48 @@ class Home extends Component {
     let {currentUser, getProfile, addFavorite, removeFavorite} = this.props;
     return (
       <>
-        { this.state.loaded.length > 0 ? (
+        {this.state.loaded.length > 0 ? (
           <div className="feed" id="scrollable">
-          <InfiniteScroll
-            dataLength={this.state.loaded.length}
-            next={this.fetchMoreData}
-            hasMore={this.state.hasMore}
-            scrollableTarget="scrollable"
-            loader={
-                <h2 style={{ textAlign: 'center', backgroundColor: '#15202b' }}>Loading
-                <Loader
-                  type="TailSpin"
-                  color="#00BFFF"
-                  height={50}
-                  width={50}
-                />
+            <InfiniteScroll
+              dataLength={this.state.loaded.length}
+              next={this.fetchMoreData}
+              hasMore={this.state.hasMore}
+              scrollableTarget="scrollable"
+              loader={
+                <h2 style={{ textAlign: 'center', backgroundColor: '#15202b' }}>
+                  Loading
+                  <Loader
+                    type="TailSpin"
+                    color="#00BFFF"
+                    height={50}
+                    width={50}
+                  />
                 </h2>
-            }
-            endMessage={
-              <p style={{ textAlign: 'center' , backgroundColor: '#15202b'}}>
-                <b>Yay! You have seen it all</b>
-              </p>
-            }
-          >
-            {this.state.loaded.map((haiku) => (
-              <HaikuCard
-                key={haiku.id}
-                haiku={haiku}
-                getProfile={getProfile}
-                currentUser={currentUser}
-                addFavorite={addFavorite}
-                removeFavorite={removeFavorite}
-              />
-              
-            ))}
-          </InfiniteScroll>
-        </div>
-           ) : (
-            <h2>Loading Feed</h2> 
-            
-         )} 
+              }
+              endMessage={
+                <p style={{ textAlign: 'center', backgroundColor: '#15202b' }}>
+                  <b>Yay! You have seen it all</b>
+                </p>
+              }
+            >
+              {this.state.loaded.map((haiku) => (
+                <HaikuCard
+                  key={haiku.id}
+                  haiku={haiku}
+                  getProfile={getProfile}
+                  currentUser={currentUser}
+                  addFavorite={addFavorite}
+                  removeFavorite={removeFavorite}
+                />
+              ))}
+            </InfiniteScroll>
+          </div>
+        ) : (
+          <div className="feed">
+            <h2>Loading</h2>
+            <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
+          </div>
+        )}
       </>
     );
     }
