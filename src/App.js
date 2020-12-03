@@ -165,7 +165,24 @@ class App extends Component {
     console.log('logged out');
     localStorage.removeItem('token');
     this.setState({ user: null, feed: [] });
-    this.props.history.push('/explore');
+    Promise.all([
+      fetch('http://localhost:4000/api/v1/users'),
+      fetch('http://localhost:4000/api/v1/haikus'),
+    ])
+      .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+      .then(([data1, data2]) =>
+        this.setState(
+          {
+            userIndex: data1,
+            feed: data2,
+          },
+          () => {
+            console.log('no user logged in');
+            console.log('non-user AFTER LOGOUT:', this.state);
+            this.props.history.push('/explore');
+          }
+        )
+      );
   };
 
   getProfile = (id) => {
@@ -312,11 +329,11 @@ class App extends Component {
 
 
   feedSort = () => {
-      return this.state.feed.sort((a,b) => {
-        if (a.created_at > b.created_at) return -1;
-        if (a.created_at < b.created_at) return 1;
-        return 0;
-      })
+    return this.state.feed.sort((a,b) => {
+      if (a.created_at > b.created_at) return -1;
+      if (a.created_at < b.created_at) return 1;
+      return 0;
+    })
   }
 
 
@@ -346,7 +363,7 @@ class App extends Component {
           )}
         />
 
-        <Switch>
+      
           <Route
             path="/home"
             render={() => (
@@ -376,7 +393,7 @@ class App extends Component {
               />
             )}
           />
-        </Switch>
+        
 
         <Welcome
           currentUser={this.state.user}

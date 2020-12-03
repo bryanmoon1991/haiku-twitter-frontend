@@ -41,7 +41,10 @@ const HaikuCard = ({ haiku, getProfile, currentUser, addFavorite, removeFavorite
     // 
     // return currentUser.favorites.includes(haiku) ? setFavorite(true) : false
     return (
-      <div className="haiku-card">
+      <>
+      {haiku ? 
+      
+      (<div className="haiku-card">
         <img src={haiku.user.image} alt="profile Pic" />
         <div className="haiku-info">
           <h3>{haiku.user.name}</h3>
@@ -59,19 +62,29 @@ const HaikuCard = ({ haiku, getProfile, currentUser, addFavorite, removeFavorite
           <p className="third">{haiku.third}</p>
         </div>
         
-        {currentUser.id === haiku.user.id ? <IoTrashOutline className="icon" onClick={() => handleDeleteHaiku(haiku)}/> : null}
         {currentUser ? (
-          favorite ? (
+          <>
+          {currentUser.id === haiku.user.id ? <IoTrashOutline className="icon" onClick={() => handleDeleteHaiku(haiku)}/> : null}
+          {favorite ? (
+            
             <RiIcons.RiHeart3Fill className="icon" onClick={handleFavorite} />
+            
           ) : (
             <RiIcons.RiHeart3Line className="icon" onClick={handleFavorite} />
-          )
+          )}
+          </>
         )
          : 
          null
          }
   
-      </div>
+      </div>)
+
+      : 
+         (<div className="haiku-card"><h3>Loading...</h3></div>)
+      
+    }
+      </>
     );
 }
 
