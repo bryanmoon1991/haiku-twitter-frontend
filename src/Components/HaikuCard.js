@@ -81,7 +81,7 @@ const HaikuCard = ({ haiku, getProfile, currentUser, addFavorite, removeFavorite
       </div>)
 
       : 
-         (<div className="haiku-card"><h3>Loading...</h3></div>)
+         (<div className="haiku-card" ><h3>Loading...</h3></div>)
       
     }
       </>

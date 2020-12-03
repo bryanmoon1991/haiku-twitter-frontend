@@ -76,6 +76,9 @@ a{
 .following-button {
     background-color: #1da1f2;
     border: none;
+    grid-column: 3/4;
+    width: fit-content;
+    height: fit-content;
 }
 
 .follow-button:hover{
@@ -97,8 +100,6 @@ a{
 .following-button:hover:before{
     content:"Unfollow";
 }
-
-
 
 
 .username:hover {

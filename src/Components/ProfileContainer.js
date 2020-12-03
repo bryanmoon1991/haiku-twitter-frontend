@@ -121,7 +121,7 @@ export const ProfileContainer = ({ getProfile, profile , profilesFavorites, curr
           />
         </Switch>
       ) : (
-        <div className="feed">
+        <div className="feed" id='loading'>
           <h2>Loading</h2>
           <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
         </div>

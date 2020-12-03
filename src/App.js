@@ -356,8 +356,7 @@ class App extends Component {
           path="/"
           render={() =>
             this.state.feed.length === 0 ? (
-              <div className="feed">
-                <h2>Loading</h2>
+              <div className="feed" id="loading">
                 <Loader
                   type="TailSpin"
                   color="#00BFFF"

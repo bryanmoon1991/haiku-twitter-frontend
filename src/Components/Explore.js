@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {ProfileCard} from './ProfileCard'
 import './Explore.css'
+import Loader from 'react-loader-spinner';
 export const Explore = ({currentUser, userIndex, getProfile, follow, unfollow }) => {
 
   const initialState = {
@@ -25,7 +26,12 @@ export const Explore = ({currentUser, userIndex, getProfile, follow, unfollow })
 
     return (
       <>
-        {userIndex.length === 0 ? <h2>Loading</h2> :
+        {userIndex.length === 0 ? 
+        
+        <div className="feed" id='loading'>
+          <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
+        </div>
+         :
           (currentUser ? (
             <>
             <form  className="search">

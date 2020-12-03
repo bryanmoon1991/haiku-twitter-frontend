@@ -8,7 +8,7 @@ export const Welcome = ({toggleSignup, toggleLogin, toggleEditProfile, currentUs
       <>
         {currentUser ? (
           <div className="welcome">
-            <h3>Welcome {currentUser.username}</h3>
+            <h3>Welcome {currentUser.name}</h3>
             <button className="nav-link-button" onClick={handleLogout}>
               Logout
             </button>

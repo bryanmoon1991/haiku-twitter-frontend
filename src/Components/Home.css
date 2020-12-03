@@ -10,7 +10,11 @@
     border: 1px solid rgba(136,153,166, 0.1);
     
 }
-
+#loading{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
 .feed::-webkit-scrollbar {
     width: 5px
 }

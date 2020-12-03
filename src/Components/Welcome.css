@@ -36,4 +36,5 @@
 .nav-link-button:focus {
   text-decoration: none;
   background-color: #192734; 
+  border-radius: 30px;
 }

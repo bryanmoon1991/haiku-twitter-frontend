@@ -56,9 +56,10 @@ class Home extends Component {
               hasMore={this.state.hasMore}
               scrollableTarget="scrollable"
               loader={
-                <h2 style={{ textAlign: 'center', backgroundColor: '#15202b' }}>
+                <h2  style={{ textAlign: 'center', backgroundColor: '#15202b' }}>
                   Loading
                   <Loader
+                    
                     type="TailSpin"
                     color="#00BFFF"
                     height={50}
@@ -85,9 +86,8 @@ class Home extends Component {
             </InfiniteScroll>
           </div>
         ) : (
-          <div className="feed">
-            <h2>Loading</h2>
-            <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
+          <div className="feed" id='loading'>
+            <Loader  type="TailSpin" color="#00BFFF" height={50} width={50} />
           </div>
         )}
       </>
