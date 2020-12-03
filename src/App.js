@@ -180,11 +180,11 @@ class App extends Component {
           () => {
             console.log('no user logged in');
             console.log('non-user AFTER LOGOUT:', this.state);
-            this.props.history.push('/explore');
           }
-        )
-      );
-  };
+          )
+          );
+        this.props.history.push('/explore');
+        };
 
   getProfile = (id) => {
     this.setState({ profile: null, profilesFavorites: [] });
