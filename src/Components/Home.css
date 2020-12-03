@@ -1,9 +1,25 @@
 .feed {
     grid-area: feed;
     height: 100vh;
-    overflow: scroll;
+    overflow: overlay;
+    /* scrollbar-width: thin; */
+    /* scrollbar-color:  #15202b; */
     justify-content: center;
     display: table-column;
     position: relative;
-
+    border: 1px solid rgba(136,153,166, 0.1);
+    
 }
+
+.feed::-webkit-scrollbar {
+    width: 5px
+}
+
+.feed::-webkit-scrollbar-track{
+    
+    background: transparent;
+}
+.feed::-webkit-scrollbar-thumb{
+    background: white;
+    border-radius: 10px;
+} 

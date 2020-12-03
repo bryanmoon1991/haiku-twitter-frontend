@@ -6,9 +6,11 @@ import { Signup } from './Components/Signup';
 import { Login } from './Components/Login';
 import { Compose } from './Components/Compose';
 import { EditProfile } from './Components/EditProfile';
-import { Home } from './Components/Home';
+import Home from './Components/Home';
 import { ProfileContainer } from './Components/ProfileContainer';
 import { Explore } from './Components/Explore';
+import { FaHSquare } from "react-icons/fa";
+import { CgTwitter } from "react-icons/cg";
 import './App.css'
 
 
@@ -162,9 +164,8 @@ class App extends Component {
   handleLogout = () => {
     console.log('logged out');
     localStorage.removeItem('token');
-    this.setState({ user: null, feed: [] }, () => {
-      this.props.history.push('/explore');
-    });
+    this.setState({ user: null, feed: [] });
+    this.props.history.push('/explore');
   };
 
   getProfile = (id) => {
@@ -181,7 +182,6 @@ class App extends Component {
       });
   };
 
-  //test
   editProfile = (user) => {
     const token = localStorage.getItem('token');
     fetch(`http://localhost:4000/api/v1/users/${this.state.user.id}`,{
@@ -216,6 +216,7 @@ class App extends Component {
       })
     })
   }
+
   addFavorite = (haikuID) => {
     fetch("http://localhost:4000/api/v1/favorites", {
       method: 'POST',
@@ -310,12 +311,22 @@ class App extends Component {
   }
 
 
+  feedSort = () => {
+      return this.state.feed.sort((a,b) => {
+        if (a.created_at > b.created_at) return -1;
+        if (a.created_at < b.created_at) return 1;
+        return 0;
+      })
+  }
+
+
   render() {
     return (
       <div className="main">
-        <div className="logo">
-          <h1>Haiku Twitter</h1>
-        </div>
+        <span className='logo'>
+          <FaHSquare className="logo-icons" />
+          <CgTwitter className="logo-icons" />
+        </span>
         <NavBar
           currentUser={this.state.user}
           getProfile={this.getProfile}
@@ -341,7 +352,7 @@ class App extends Component {
             render={() => (
               <Home
                 currentUser={this.state.user}
-                feed={this.state.feed}
+                feed={this.feedSort()}
                 getProfile={this.getProfile}
                 addFavorite={this.addFavorite}
                 removeFavorite={this.removeFavorite}

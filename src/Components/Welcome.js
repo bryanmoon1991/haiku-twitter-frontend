@@ -6,22 +6,26 @@ export const Welcome = ({toggleSignup, toggleLogin, toggleEditProfile, currentUs
 
     return (
       <>
-            {currentUser ? 
-                (
-                    <div className="welcome">
-                        <h3>Welcome {currentUser.username}</h3>
-                        <a onClick={handleLogout}>Logout</a>
-                        <a onClick={toggleEditProfile}>Edit Profile</a>
-                    </div>
-                )
-            :
-                (
-                    <div className="welcome">
-                        <a onClick={toggleSignup}>{ <RiIcons.RiArrowRightSLine /> } Sign Up</a>
-                        <a onClick={toggleLogin}>{ <RiIcons.RiArrowRightSLine /> } Log In</a>
-                    </div >
-                )
-            }
+        {currentUser ? (
+          <div className="welcome">
+            <h3>Welcome {currentUser.username}</h3>
+            <button className="nav-link-button" onClick={handleLogout}>
+              Logout
+            </button>
+            <button className="nav-link-button" onClick={toggleEditProfile}>
+              Edit Profile
+            </button>
+          </div>
+        ) : (
+          <div className="welcome">
+            <button className="nav-link-button" onClick={toggleSignup}>
+              {<RiIcons.RiArrowRightSLine />} Sign Up
+            </button>
+            <button className="nav-link-button" onClick={toggleLogin}>
+              {<RiIcons.RiArrowRightSLine />} Log In
+            </button>
+          </div>
+        )}
       </>
     );
 }

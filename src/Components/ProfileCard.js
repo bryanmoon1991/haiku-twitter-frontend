@@ -30,8 +30,16 @@ export const ProfileCard = ({user, getProfile, unfollow, follow, currentUser}) =
       <div className="profile-card">
         <img src={user.image} alt="avatar" />
         <div className="info">
+        <Link to={`/users/${user.id}`} onClick={() => getProfile(user.id)}>
           <h3 className="name">{user.name}</h3>
-          {currentUser ? (
+        </Link>
+
+          <Link to={`/users/${user.id}`} onClick={() => getProfile(user.id)}>
+            <p className="username">@{user.username}</p>
+          </Link>
+          <p className="bio">{user.bio}</p>
+        </div>
+        {currentUser ? (
             currentUser.id === user.id ? null : followed ? (
               <button onClick={handleFollow} className="following-button"> 
                 <span>
@@ -45,12 +53,6 @@ export const ProfileCard = ({user, getProfile, unfollow, follow, currentUser}) =
               </button>
             )
           ) : null}
-
-          <Link to={`/users/${user.id}`} onClick={() => getProfile(user.id)}>
-            <p className="username">@{user.username}</p>
-          </Link>
-          <p className="bio">{user.bio}</p>
-        </div>
         <div className="nav-links">
           <Link
             to={`/users/${user.id}/followers`}

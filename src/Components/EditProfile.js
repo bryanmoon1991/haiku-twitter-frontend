@@ -15,25 +15,55 @@ const Background = styled.div`
 
 const ModalWrapper = styled.div`
   width: 400px;
-  height: 300px;
+  height: 170px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  color: #000;
+  background: #15202b;
   position: relative;
   z-index: 10;
   border-radius: 10px;
+
+  h2 {
+    text-align: center;
+    padding-top: 15px;
+    color: #fff;
+  }
 `;
 
 const CloseModalButton = styled(MdClose)`
   cursor: pointer;
   position: absolute;
-  top: 20px;
+  top: 10px;
   right: 20px;
   width: 32px;
   height: 32px;
   padding: 0;
   z-index: 10;
+  color: rgb(29, 161, 242);
 `;
+
+const FormContainer = styled.form `
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 0px 15px;
+  input {
+    height: 1.2em;
+  }
+  button {
+    color: #1da1f2;
+    border: 1px solid #1da1f2;
+    border-radius: 20px;
+    background-color: #192734;
+    justify-self: center;
+    font-size: 1.1em;
+    width: fit-content;
+    height: fit-content; 
+  }
+  button:hover{
+    background-color: rgba(29, 161, 242, 0.5);
+  }
+`
+
 
 export const EditProfile = (props) => {
   const initialState = {
@@ -88,8 +118,8 @@ export const EditProfile = (props) => {
           <animated.div style={animation}>
             <ModalWrapper showEditProfile={props.showEditProfile}>
               <div>
-                <h1>Edit Profile</h1>
-                <form onSubmit={handleSubmit}>
+                <h2>Edit Profile</h2>
+                <FormContainer onSubmit={handleSubmit}>
                   <input
                     placeholder="username"
                     type="text"
@@ -121,7 +151,7 @@ export const EditProfile = (props) => {
                   <button placeholder="submit" type="submit">
                     Submit Changes
                   </button>
-                </form>
+                </FormContainer>
               </div>
               <CloseModalButton
                 aria-label="Close modal"

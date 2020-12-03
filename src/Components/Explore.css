@@ -1,0 +1,24 @@
+.search { 
+    grid-area: search;
+    display: grid;
+    padding: 2px 4px;
+} 
+
+.search form{
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+}
+
+input{
+    align-items: end;
+    background-color: #253341;
+    border-radius: 20px;
+    border: 1px solid  rgba(37, 51, 65, 0);
+    grid-column: 1/2;
+    color: white;
+}
+
+input:focus{
+    border-color: #1da1f2;
+    outline: none;
+}

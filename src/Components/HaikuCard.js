@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import './HaikuCard.css'
 import { Link } from 'react-router-dom'
 import * as RiIcons from 'react-icons/ri';
+// import * as GrIcons from 'react-icons/gr'
+import { BsFillClockFill } from "react-icons/bs";
+import { IoTrashOutline } from 'react-icons/io5'
 
 
 const HaikuCard = ({ haiku, getProfile, currentUser, addFavorite, removeFavorite, handleDeleteHaiku }) => {
@@ -40,7 +43,7 @@ const HaikuCard = ({ haiku, getProfile, currentUser, addFavorite, removeFavorite
     return (
       <div className="haiku-card">
         <img src={haiku.user.image} alt="profile Pic" />
-        <div className="info">
+        <div className="haiku-info">
           <h3>{haiku.user.name}</h3>
           <Link
             to={`/users/${haiku.user.id}`}
@@ -48,14 +51,15 @@ const HaikuCard = ({ haiku, getProfile, currentUser, addFavorite, removeFavorite
           >
             @{haiku.user.username}
           </Link>
-          <p>{timeDisplay(haiku.created_at)}</p>
+          <p><BsFillClockFill className="clock"/> {timeDisplay(haiku.created_at)}</p>
         </div>
         <div className="haiku">
           <p className="first">{haiku.first}</p>
           <p className="second">{haiku.second}</p>
           <p className="third">{haiku.third}</p>
         </div>
-        {currentUser.id === haiku.user.id ? <button onClick={() => handleDeleteHaiku(haiku)}>Delete</button> : null}
+        
+        {currentUser.id === haiku.user.id ? <IoTrashOutline className="icon" onClick={() => handleDeleteHaiku(haiku)}/> : null}
         {currentUser ? (
           favorite ? (
             <RiIcons.RiHeart3Fill className="icon" onClick={handleFavorite} />

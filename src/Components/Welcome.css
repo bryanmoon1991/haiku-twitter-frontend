@@ -5,7 +5,7 @@
 
 }
 
-.welcome a {
+.welcome button {
   background-color: #15202b;
   display: block; /* Make the links appear below each other */
   padding: 25px; /* Add some padding */
@@ -20,6 +20,20 @@
   font-size: large;
 }
 
-.welcome a:hover {
+
+
+.nav-link-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+.nav-link-button:hover,
+.nav-link-button:focus {
+  text-decoration: none;
   background-color: #192734; 
 }
